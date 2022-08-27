@@ -9,6 +9,7 @@
 // @icon         https://www.google.com/s2/favicons?domain=turbowarp.org
 // @grant        none
 // @license MIT
+// @downloadURL none
 // ==/UserScript==
 
 /* Preets;
@@ -17,9 +18,8 @@ When there is [R] at the begining, the "url" parametter is gonna be treated like
 const presets=[
     {"name":"UtilsV2","url":"[R]https://raw.githubusercontent.com/lukas-studio-tv/another-lstv-proxy/main/docs/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/hctUsfD2qeUtilsV2.js","color":"lime"},
     {"name":"GameJoltAPI [Beta]","url":"[R]https://lukas-studio-tv.github.io/another-lstv-proxy/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/Xzy5wV6Q9WGJ%20API.js","color":"#2f7f6f"},
-    {"name":"AudioManager","url":"[R]https://raw.githubusercontent.com/lukas-studio-tv/another-lstv-proxy/main/docs/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/ekCNWxYHTAAudioManager.js","color":"purple"},
-    {"name":"Cloudlink","url":"[R]https://mikedev101.github.io/cloudlink/B3-0.js","color":"#21c7ff"},
-    {"name":"ScratchZip [Link temp. broken]","url":"[R]b3","color":"yellow"}
+    {"name":"Scratch Noise","url":"[R]https://raw.githubusercontent.com/David-Orangemoon/Modified-Extension-Loader-Turbowarp/main/custom%20extensions/Noise.js","color":"purple"},
+    {"name":"Audio Manager","https://raw.githubusercontent.com/lukas-studio-tv/another-lstv-proxy/main/docs/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/ekCNWxYHTAAudioManager.js":"[R]b2","color":"#21c7ff"},
 ];
 
 
