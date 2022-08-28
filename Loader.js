@@ -20,7 +20,9 @@ const presets=[
     {"name":"GameJoltAPI [Beta]","url":"[R]https://lukas-studio-tv.github.io/another-lstv-proxy/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/Xzy5wV6Q9WGJ%20API.js","color":"#2f7f6f"},
     {"name":"Scratch Noise","url":"[R]https://raw.githubusercontent.com/David-Orangemoon/Modified-Extension-Loader-Turbowarp/main/custom%20extensions/Noise.js","color":"purple"},
     {"name":"Audio Manager","url":"[R]https://raw.githubusercontent.com/lukas-studio-tv/another-lstv-proxy/main/docs/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/ekCNWxYHTAAudioManager.js","color":"#21c7ff"},
-    {"name":"Gamepad","url":"[R]https://romadillo.github.io/Useful-Scratch-Extensions/Gamepad.js","color":"#e4b100"}
+    {"name":"Gamepad","url":"[R]https://romadillo.github.io/Useful-Scratch-Extensions/Gamepad.js","color":"#e4b100"},
+    {"name":"Cookies","url":"[R]https://raw.githubusercontent.com/David-Orangemoon/Modified-Extension-Loader-Turbowarp/main/custom%20extensions/Cookie.js","color":"#755848"},
+    {"name":"Xtra Math","url":"[R]https://raw.githubusercontent.com/David-Orangemoon/Modified-Extension-Loader-Turbowarp/main/custom%20extensions/Extramath.js","color":"#5cb712"}
 ];
 
 
@@ -40,21 +42,21 @@ The [R] indicates url. If you don't include it, it will get loaded as the code.
 window.cPluginURL="";
 window.plRefreshPluginPresets = function() {
     var container;
-    if(isPackager){
-        container = document.querySelector(".pk_preset_c");
-        container.innerHTML = "";
-        for (let i=0;i<presets.length;i++) {
-            var icon="plus-square";
-            if(twp_ta.value.includes(presets[i].url.substring(3,presets[i].url.length))){icon="trash-fill"}
-            container.innerHTML = container.innerHTML + `<div class="pl_preset" onclick='addTWPPlugin("`+presets[i].url+`",this)'></span><i class="bi bi-`+icon+`" style="color:`+presets[i].color+`;margin-right:7px;"></i>`+presets[i].name + `</div>`;
-        }
-    }else{
+    //if(isPackager){
+    //    container = document.querySelector(".pk_preset_c");
+    //    container.innerHTML = "";
+    //    for (let i=0;i<presets.length;i++) {
+    //        var icon="plus-square";
+    //        if(twp_ta.value.includes(presets[i].url.substring(3,presets[i].url.length))){icon="trash-fill"}
+    //        container.innerHTML = container.innerHTML + `<div class="pl_preset" onclick='addTWPPlugin("`+presets[i].url+`",this)'></span><i class="bi bi-`+icon+`" style="color:`+presets[i].color+`;margin-right:7px;"></i>`+presets[i].name + `</div>`;
+    //    }
+    //}//else{
         container = document.querySelector(".pl_preset_c");
         container.innerHTML = "";
         for (let i = 0;i< presets.length;i++) {
             container.innerHTML = container.innerHTML + `<div class="pl_preset" onclick='loadPlugin("` + presets[i].url + "?update=" + Math.floor(Math.random() * 1001) + `")'><span class="plcspan" style="background:` + presets[i].color + `;"> ` + presets[i].name + `</div>`;
         }
-    }
+    //}
 }
 const RequestNetwork={sendRequest:function(a,b){RequestNetwork.sucess=!0,fetch(a).then(a=>a.text()).then(a=>{RequestNetwork.onRequestResponseRecived(a,b)}).catch(a=>{RequestNetwork.sucess=!1,RequestNetwork.onError(a,b)})},onRequestResponseRecived:function(a,b){console.log(b+", "+a)},onError:function(a,b){console.error("Fetch error, tag:"+b+", error: "+a)},sucess:!1};
 if(!isPackager){
@@ -105,11 +107,12 @@ if(!isPackager){
 `;
         document.body.append(elm);
     }, 800);
-}else{setTimeout(function(){
+}else{
+    setTimeout(function(){
     var plcat=`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"><div class="card svelte-1qy2cex" style="border-top: 6px solid #F00"><div><h2>Plugins [BETA]</h2><i>Added by the plugin loader UI</i><br>You can add more presets in the script's preset configuration.<br>With this addon you can simply add or remove plugins!<br>+ It (should) save your plugins for this project - even after refresh and with offline access.<br><br><div class="pk_preset_c"><i>Your presets should be displayed here.</i></div></div></div>`;
-    window.plAppendToPackager=function(){
-        if(document.querySelectorAll(".card")[4]==null){setTimeout(function(){plAppendToPackager()},250)}else{document.querySelectorAll(".card")[4].outerHTML+=plcat;window.twp_ta=document.querySelectorAll("textarea")[2]; if(!twp_ta.value.includes("/* The plugin UI")){twp_ta.value+="/* The plugin UI will add plugins here! Feel free to add your own code, but make sure you do not interrupt the comment blocks indicating plugin start and plugin end.*/\n\n\n"};window.plRefreshPluginPresets();}
-    }
+    //window.plAppendToPackager=function(){
+    //    if(document.querySelectorAll(".card")[4]==null){setTimeout(function(){plAppendToPackager()},250)}else{document.querySelectorAll(".card")[4].outerHTML+=plcat;window.twp_ta=document.querySelectorAll("textarea")[2]; if(!twp_ta.value.includes("/* The plugin UI")){twp_ta.value+="/* The plugin UI will add plugins here! Feel free to add your own code, but make sure you do not interrupt the comment blocks indicating plugin start and plugin end.*/\n\n\n"};window.plRefreshPluginPresets();}
+    //}
     document.querySelector("button").addEventListener("click",plAppendToPackager)},100);
     window.addTWPPlugin=function(url,src){
         window.cPluginSRC=src.querySelector("i");
@@ -127,7 +130,7 @@ if(!isPackager){
         cPluginSRC.classList.remove("bi-trash-fill");
     }
 }
-var globalStyles=`<style>.pl_preset{background:#333333;color:white;padding:10px;border-radius:5px;display:inline-block;cursor:pointer;margin:5px;}.plcspan{border-radius:300px;padding:0px;width:10px;height:10px;display:inline-block;}</style>`;
+var globalStyles=`<style>.pl_preset{background:#333333;color:white;padding:0px;border-radius:0px;display:inline-block;cursor:pointer;margin-bottom:10px;margin-right:40%;margin-left:40%}.plcspan{border-radius:300px;padding:2px;width:25px;height:25px;}</style>`;
 setTimeout(function(){document.body.insertAdjacentHTML("afterend",globalStyles);},2000);
     RequestNetwork.onError=function(error, tag) {
         alert("Failed to load plugin from an url. \nPlease make sure that:\n- You are connected to the internet\n- Plugin is loaded over HTTPS\n- That the url has Access-Control-Allow-Origin set to '*'\n\n(Look to the console for details)");
