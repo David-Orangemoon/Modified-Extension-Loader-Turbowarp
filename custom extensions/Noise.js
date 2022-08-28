@@ -102,8 +102,11 @@ class Scratch3Noise {
 
     getInfo () {
         return {
-            id: 'noise',
-            name: 'Noise',
+            "id": 'noise',
+            "name": 'Noise',
+            "color1": '#8a8a8a',
+            "color2": '#737373',
+            "color3": '#a8a8a8',
             blocks: [
                 {
                     opcode: 'noise',
