@@ -19,7 +19,8 @@ const presets=[
     {"name":"UtilsV2","url":"[R]https://raw.githubusercontent.com/lukas-studio-tv/another-lstv-proxy/main/docs/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/hctUsfD2qeUtilsV2.js","color":"lime"},
     {"name":"GameJoltAPI [Beta]","url":"[R]https://lukas-studio-tv.github.io/another-lstv-proxy/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/Xzy5wV6Q9WGJ%20API.js","color":"#2f7f6f"},
     {"name":"Scratch Noise","url":"[R]https://raw.githubusercontent.com/David-Orangemoon/Modified-Extension-Loader-Turbowarp/main/custom%20extensions/Noise.js","color":"purple"},
-    {"name":"Audio Manager","https://raw.githubusercontent.com/lukas-studio-tv/another-lstv-proxy/main/docs/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/ekCNWxYHTAAudioManager.js":"[R]b2","color":"#21c7ff"},
+    {"name":"Audio Manager","url":"[R]https://raw.githubusercontent.com/lukas-studio-tv/another-lstv-proxy/main/docs/ws-clone/ml/cdn/dock-snapshot-12422/uploaded-raw-content/ekCNWxYHTAAudioManager.js","color":"#21c7ff"},
+    {"name":"Gamepad","url":"[R]https://romadillo.github.io/Useful-Scratch-Extensions/Gamepad.js","color":"#e4b100"}
 ];
 
 
