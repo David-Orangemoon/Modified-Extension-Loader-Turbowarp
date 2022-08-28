@@ -1,3 +1,9 @@
+if (typeof window === "undefined" || !window.vm) {
+    isSandboxed = true;
+  } else {
+    isSandboxed = false;
+  }
+
 class BaseExtension {
     constructor(runtime) {
         this.runtime = runtime
