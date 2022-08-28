@@ -1,9 +1,9 @@
 if (typeof window === "undefined" || !window.vm) {
-  isSandboxed = true;
-} else {
-  isSandboxed = false;
-}
-
+    isSandboxed = true;
+  } else {
+    isSandboxed = false;
+  }
+  
 class Cookie {
     constructor(runtime) {
         this.runtime = runtime
@@ -79,6 +79,17 @@ class Cookie {
                         }                  
                     },
                     {
+                        "opcode": "doescookieexist",
+                        "blockType": "Boolean",
+                        "text": "does cookie by the name of [c] exist?",
+                        "arguments": {
+                            "c": {
+                                "type": "string",
+                                "defaultValue": "Cookie Name"
+                            }
+                        }                  
+                    },
+                    {
                         "opcode": "delcookie",
                         "blockType": "command",
                         "text": "Delete cookie of name [b] and the path of [p]",
@@ -92,7 +103,7 @@ class Cookie {
                                 "defaultValue": "Cookie Path"
                             }
                         }                 
-                    },               
+                    }       
             ],           
         };
     }
@@ -122,7 +133,23 @@ class Cookie {
             return ck.substring(name.length, ck.length);
             }
         }
-        return "";
+        return "Cookie not found";
+    }
+
+    doescookieexist({c}) {
+        let name = c + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let ck = ca[i];
+            while (ck.charAt(0) == ' ') {
+            ck = ck.substring(1);
+            }
+            if (ck.indexOf(name) == 0) {
+            return "true"
+            }
+        }
+        return "false"
     }
     delcookie({b,p}) {
         return document.cookie = b + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/" + p;
