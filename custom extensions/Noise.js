@@ -89,6 +89,12 @@ class PerlinNoise {
     }
 }
 
+if (typeof window === "undefined" || !window.vm) {
+  isSandboxed = true;
+} else {
+  isSandboxed = false;
+}
+
 class Scratch3Noise {
     constructor (runtime) {
         this.runtime = runtime;
