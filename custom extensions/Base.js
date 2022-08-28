@@ -32,7 +32,7 @@ class BaseExtension {
 }
 
 (function() {
-    var extensionInstance = new ScratchGamepad(window.vm.extensionManager.runtime)
+    var extensionInstance = new BaseExtension(window.vm.extensionManager.runtime)
     var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
     window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
 })()
