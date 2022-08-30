@@ -156,8 +156,181 @@ class Cookie {
     }
 }
 
+class LocalStorageEX {
+    constructor(runtime) {
+        this.runtime = runtime
+    }
+    
+    getInfo() {
+        return {
+            "id": "localstore",
+            "name": "Local Storage",
+            "color1":'#5cc4ba',
+            "color2":'#5cc4ba',
+            "color3":'#5cc4ba',
+            "blockIconURI": "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSI1NS4wMjg1OCIgaGVpZ2h0PSI0Ni40NTg4NiIgdmlld0JveD0iMCwwLDU1LjAyODU4LDQ2LjQ1ODg2Ij48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjEyLjQ4NTcxLC0xNTYuNzcwNTcpIj48ZyBkYXRhLXBhcGVyLWRhdGE9InsmcXVvdDtpc1BhaW50aW5nTGF5ZXImcXVvdDs6dHJ1ZX0iIGZpbGw9IiNmZmZmZmYiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48Zz48cGF0aCBkPSJNMjEyLjc2MjA3LDE4NC44NjMwMWMwLC0zLjE0NzIzIDAsLTguNDMzODcgMCwtMTAuMTUyNzJjMCwtMS4wNjU5MSAxLjE3OTc1LC0yLjI3OTM3IDIuNTkzMDUsLTIuMjc5MzdjMy45MTkwOSwwIDQ2Ljk0NDI5LDAgNDkuNjI3NjEsMGMxLjU0OTIyLDAgMi40Mzk0NCwxLjQ3OTg5IDIuNDM5NDQsMi43MDUzNmMwLDEuNzU5NjkgMCw2LjcxMzYxIDAsOS43MjY3M2MwLDEuNDM0OTMgLTAuOTE3NDQsMi40Mjk3MSAtMi41MTA0NCwyLjQyOTcxYy05LjY1NDIxLDAgLTQ0LjEyMDU2LDAgLTQ5LjU1NjYxLDBjLTEuNDEzMywwIC0yLjU5MzA1LC0wLjk5MTQ2IC0yLjU5MzA1LC0yLjQyOTcxek0yNTkuODY5MzIsMTg2LjA2ODU2YzMuNDIwMjksMCA2LjE5Mjk4LC0yLjc3MjY5IDYuMTkyOTgsLTYuMTkyOThjMCwtMy40MjAyOSAtMi43NzI2OSwtNi4xOTI5OCAtNi4xOTI5OCwtNi4xOTI5OGMtMy40MjAyOSwwIC02LjE5Mjk4LDIuNzcyNjkgLTYuMTkyOTgsNi4xOTI5OGMwLDMuNDIwMjkgMi43NzI2OSw2LjE5Mjk4IDYuMTkyOTgsNi4xOTI5OHpNMjQ2LjYwNDA4LDE4Ni4wNjg1NmMzLjQyMDI5LDAgNi4xOTI5OCwtMi43NzI2OSA2LjE5Mjk4LC02LjE5Mjk4YzAsLTMuNDIwMjkgLTIuNzcyNjksLTYuMTkyOTggLTYuMTkyOTgsLTYuMTkyOThjLTMuNDIwMjksMCAtNi4xOTI5OCwyLjc3MjY5IC02LjE5Mjk4LDYuMTkyOThjMCwzLjQyMDI5IDIuNzcyNjksNi4xOTI5OCA2LjE5Mjk4LDYuMTkyOTh6Ii8+PHBhdGggZD0iTTIxMi44NTQxOSwyMDAuNzk5NzJjMCwtMy4xNDcyMyAwLC04LjQzMzg3IDAsLTEwLjE1MjcyYzAsLTEuMDY1OSAxLjE3OTc1LC0yLjI3OTM3IDIuNTkzMDYsLTIuMjc5MzdjMy45MTkwOSwwIDQ2Ljk0NDI5LDAgNDkuNjI3NjEsMGMxLjU0OTIyLDAgMi40Mzk0NCwxLjQ3OTg5IDIuNDM5NDQsMi43MDUzNmMwLDEuNzU5NjkgMCw2LjcxMzYxIDAsOS43MjY3M2MwLDEuNDM0OTMgLTAuOTE3NDQsMi40Mjk3MSAtMi41MTA0NCwyLjQyOTcxYy05LjY1NDIxLDAgLTQ0LjEyMDU2LDAgLTQ5LjU1NjYxLDBjLTEuNDEzMzEsMCAtMi41OTMwNiwtMC45OTE0NiAtMi41OTMwNiwtMi40Mjk3MXpNMjU5Ljk2MTQ0LDIwMi4wMDUyN2MzLjQyMDI5LDAgNi4xOTI5OCwtMi43NzI2OSA2LjE5Mjk4LC02LjE5Mjk4YzAsLTMuNDIwMjkgLTIuNzcyNjksLTYuMTkyOTggLTYuMTkyOTgsLTYuMTkyOThjLTMuNDIwMjksMCAtNi4xOTI5OCwyLjc3MjY5IC02LjE5Mjk4LDYuMTkyOThjMCwzLjQyMDI5IDIuNzcyNjksNi4xOTI5OCA2LjE5Mjk4LDYuMTkyOTh6Ii8+PHBhdGggZD0iTTIxMi40ODU3MSwxNjkuMjAyNjZjMCwtMy4xNDcyMyAwLC04LjQzMzg3IDAsLTEwLjE1MjcyYzAsLTEuMDY1OSAxLjE3OTc1LC0yLjI3OTM3IDIuNTkzMDYsLTIuMjc5MzdjMy45MTkwOSwwIDQ2Ljk0NDI5LDAgNDkuNjI3NjEsMGMxLjU0OTIyLDAgMi40Mzk0NCwxLjQ3OTg5IDIuNDM5NDQsMi43MDUzNmMwLDEuNzU5NjkgMCw2LjcxMzYxIDAsOS43MjY3M2MwLDEuNDM0OTMgLTAuOTE3NDQsMi40Mjk3MSAtMi41MTA0NCwyLjQyOTcxYy05LjY1NDIxLDAgLTQ0LjEyMDU2LDAgLTQ5LjU1NjYxLDBjLTEuNDEzMzEsMCAtMi41OTMwNiwtMC45OTE0NiAtMi41OTMwNiwtMi40Mjk3MXpNMjMyLjk3MDM2LDE3MC44Njg4YzMuNDIwMjksMCA2LjE5Mjk4LC0yLjc3MjY5IDYuMTkyOTgsLTYuMTkyOThjMCwtMy40MjAyOSAtMi43NzI2OSwtNi4xOTI5OCAtNi4xOTI5OCwtNi4xOTI5OGMtMy40MjAyOSwwIC02LjE5Mjk4LDIuNzcyNjkgLTYuMTkyOTgsNi4xOTI5OGMwLDMuNDIwMjkgMi43NzI2OSw2LjE5Mjk4IDYuMTkyOTgsNi4xOTI5OHpNMjQ2LjMyNzcyLDE3MC40MDgyMWMzLjQyMDI5LDAgNi4xOTI5OCwtMi43NzI2OSA2LjE5Mjk4LC02LjE5Mjk4YzAsLTMuNDIwMjkgLTIuNzcyNjksLTYuMTkyOTggLTYuMTkyOTgsLTYuMTkyOThjLTMuNDIwMjksMCAtNi4xOTI5OCwyLjc3MjY5IC02LjE5Mjk4LDYuMTkyOThjMCwzLjQyMDI5IDIuNzcyNjksNi4xOTI5OCA2LjE5Mjk4LDYuMTkyOTh6TTI1OS41OTI5NiwxNzAuNDA4MjFjMy40MjAyOSwwIDYuMTkyOTgsLTIuNzcyNjkgNi4xOTI5OCwtNi4xOTI5OGMwLC0zLjQyMDI5IC0yLjc3MjY5LC02LjE5Mjk4IC02LjE5Mjk4LC02LjE5Mjk4Yy0zLjQyMDI5LDAgLTYuMTkyOTgsMi43NzI2OSAtNi4xOTI5OCw2LjE5Mjk4YzAsMy40MjAyOSAyLjc3MjY5LDYuMTkyOTggNi4xOTI5OCw2LjE5Mjk4eiIvPjwvZz48L2c+PC9nPjwvc3ZnPg==",
+            "blocks": [
+                    {
+                        "opcode": "lssetitem",
+                        "blockType": "command",
+                        "text": "Local storage set item of name [i] to [v]",
+                        "arguments": {
+                            "i": {
+                                "type": "string",
+                                "defaultValue": "Item Name"
+                            },
+                            "v": {
+                                "type": "string",
+                                "defaultValue": "Item Value"
+                            }
+                        }                 
+                    },
+                    {
+                        "opcode": "lsclearstor",
+                        "blockType": "command",
+                        "text": "Clear the Local Storage",
+                        "arguments": {
+                        }
+                    },
+                    {
+                        "opcode": "lsgetitem",
+                        "blockType": "reporter",
+                        "text": "Local Storage get item of name [n]",
+                        "arguments": {
+                            "n": {
+                                "type": "string",
+                                "defaultValue": "Item Name"
+                            }
+                        }                  
+                    },
+                    {
+                        "opcode": "lsdoesitemexist",
+                        "blockType": "Boolean",
+                        "text": "does item [i] exist in the Local Storage?",
+                        "arguments": {
+                            "i": {
+                                "type": "string",
+                                "defaultValue": "Item Name"
+                            }
+                        }                  
+                    },
+                    {
+                        "opcode": "lsremoveitem",
+                        "blockType": "command",
+                        "text": "Local Storage remove item [i]",
+                        "arguments": {
+                            "i": {
+                                "type": "string",
+                                "defaultValue": "Item Name"
+                            }
+                        }                  
+                    },
+                    {
+                        "opcode": "lslength",
+                        "blockType": "reporter",
+                        "text": "Length of Local Storage",
+                        "arguments": {
+                        }                  
+                    },
+                    {
+                        "opcode": "lsgetall",
+                        "blockType": "reporter",
+                        "text": "All of local storage (Might not work not sure)",
+                        "arguments": {
+                        }
+                    }
+            ],           
+        };
+    }
+    
+    //cookies
+    makecookie({b,v,e}) {
+        return document.cookie = b + "=" + v + "; expires=" + e;
+    }
+    makecookiepath({b,v,e,p}) {
+        return document.cookie = b + "=" + v + "; expires=" + e + "; path=/" + p;
+    }
+    readallcookies({}) {
+        return document.cookie;
+    }
+    readcookieofname({c}) {
+        let name = c + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let ck = ca[i];
+            while (ck.charAt(0) == ' ') {
+            ck = ck.substring(1);
+            }
+            if (ck.indexOf(name) == 0) {
+            return ck.substring(name.length, ck.length);
+            }
+        }
+        return "Cookie not found";
+    }
+    doescookieexist({c}) {
+        let name = c + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let ck = ca[i];
+            while (ck.charAt(0) == ' ') {
+            ck = ck.substring(1);
+            }
+            if (ck.indexOf(name) == 0) {
+            return "true"
+            }
+        }
+        return "false"
+    }
+    delcookie({b,p}) {
+        return document.cookie = b + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/" + p;
+    }
+    //Local Storage Update :)
+    lssetitem({i,v}) {
+        return localStorage.setItem(i, v);
+    }
+    lsclearstor({}) {
+        return localStorage.clear();
+    }
+    lsgetitem({n}) {
+        return localStorage.getItem(n)
+    }
+    lsremoveitem({i}) {
+        return localStorage.removeItem(i);
+    }
+    lsdoesitemexist({i}) {
+        let name = localStorage.getItem(i);
+
+        if(name){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    lslength({}) {
+        return localStorage.length;
+    }
+    lsgetall({}) {
+
+        let archive = [],
+        keys = Object.keys(localStorage),
+        i = 0, key;
+        
+        for (; key = keys[i]; i++) {
+            archive.push( key + '=' + localStorage.getItem(key));
+        }
+        
+        return archive;
+    }
+}
+
 (function() {
     var extensionInstance = new Cookie(window.vm.extensionManager.runtime)
+    var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
+    window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
+
+    var extensionInstance = new LocalStorageEX(window.vm.extensionManager.runtime)
     var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
     window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
 })()
