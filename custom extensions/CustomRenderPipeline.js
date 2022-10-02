@@ -499,11 +499,11 @@ class BetterPen {
                               "defaultValue": "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
                           },
                           "trianglepoints": {
-                              "type": "number",
+                              "type": "string",
                               "defaultValue": "0,0,10,10,0,10"
                           },
                           "triangleuvs": {
-                              "type": "number",
+                              "type": "string",
                               "defaultValue": "0,0,1,1,0,1"
                           }
                       }                    
