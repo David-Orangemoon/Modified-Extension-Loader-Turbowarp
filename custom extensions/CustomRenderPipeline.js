@@ -507,11 +507,77 @@ class BetterPen {
                               "defaultValue": "0,0,1,1,0,1"
                           }
                       }                    
+                  },
+                  {
+                    "opcode": "gettargetstagewidth",
+                    "blockType": "reporter",
+                    "text": "Target Stage Width",
+                    "arguments": {
+                    }                    
+                  },
+                  {
+                    "opcode": "gettargetstageheight",
+                    "blockType": "reporter",
+                    "text": "Target Stage Height",
+                    "arguments": {
+                    }                    
+                  },
+                  {
+                    "opcode": "converttocanvascoords",
+                    "blockType": "reporter",
+                    "text": "Convert [scrcoord] to [coordTypes] units on the axis [coordmenu]",
+                    "arguments": {
+                      "coordmenu": {
+                        "type": "string",
+                        "menu": 'coordMenu'
+                      },
+                      "scrcoord": {
+                        "type": "number",
+                        "defaultValue": '0'
+                      },
+                      "coordTypes": {
+                        "type": "string",
+                        "menu": 'coordTypes'
+                      }
+                    }                    
                   }
-            ],           
+            ],        
+            "menus": {
+              "coordMenu": {
+                  "items": ['x', 'y']
+              },
+              "coordTypes": {
+                "items": ['Canvas', 'Scratch']
+            }
+          }   
         };
     }
     
+    converttocanvascoords({coordmenu,scrcoord,coordTypes}) {
+      if (coordTypes == 'Canvas')
+      {
+        if (coordmenu == "x")
+        {
+            return scrcoord + (screenwidth/2)
+        }
+        else
+        {
+            return scrcoord + (screenheight/2)
+        }
+      }
+      else
+      {
+        if (coordmenu == "x")
+        {
+            return scrcoord - (screenwidth/2)
+        }
+        else
+        {
+            return scrcoord - (screenheight/2)
+        }
+      }
+    }
+
     pendrawspritefromurl({url,x,y}) {
         canvaswidth = canvas.width
         canvasheight =  canvas.height
@@ -522,6 +588,14 @@ class BetterPen {
         }
         drawImage(textures[url].texture, Penwidth * scalemultiplyer, PenHeight * scalemultiplyer, x * scalemultiplyer, y * scalemultiplyer);
         return "stamped"
+    }
+
+    gettargetstagewidth({}) {
+      return screenwidth
+    }
+
+    gettargetstageheight({}) {
+      return screenheight
     }
 
     pendrawtexturedtrifromurl({url,trianglepoints,triangleuvs}) {
