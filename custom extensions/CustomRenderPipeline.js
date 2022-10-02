@@ -562,7 +562,7 @@ class BetterPen {
         }
         else
         {
-            return scrcoord + (screenheight/2)
+            return (scrcoord*-1) + (screenheight/2)
         }
       }
       else
@@ -573,7 +573,7 @@ class BetterPen {
         }
         else
         {
-            return scrcoord - (screenheight/2)
+            return (scrcoord*-1) - (screenheight/2)
         }
       }
     }
