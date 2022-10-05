@@ -8,6 +8,7 @@ var Penwidth = 64
 var PenHeight = 64
 var screenwidth = 480
 var screenheight = 360
+var stamprotation = 90
 
 //matrix stuff from webglfundamentals.org
 var m4 = {
@@ -281,6 +282,10 @@ if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
 
 //cool drawing functions
 
+function degtorad(deg) {
+  return deg * 0.0174533
+}
+
 function loadImageAndCreateTextureInfo(url) {
     var tex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -311,7 +316,7 @@ function loadImageAndCreateTextureInfo(url) {
     return textureInfo;
   }
 
-  function drawImage(tex, texWidth, texHeight, dstX, dstY) {
+  function drawImage(tex, texWidth, texHeight, dstX, dstY ,stamprotation) {
     gl.bindTexture(gl.TEXTURE_2D, tex);
 
     // Tell WebGL to use our shader program pair
@@ -330,6 +335,8 @@ function loadImageAndCreateTextureInfo(url) {
 
     // this matrix will translate our quad to dstX, dstY
     matrix = m4.translate(matrix, dstX, dstY, 0);
+
+    matrix = m4.zRotate(matrix,degtorad(stamprotation))
 
     // this matrix will scale our 1 unit quad
     // from 1 unit to texWidth, texHeight units
@@ -449,6 +456,28 @@ class BetterPen {
                         }                    
                     },
                     {
+                      "opcode": "rotateStamp",
+                      "blockType": "command",
+                      "text": "Set stamp rotation to [ANGLE]",
+                      "arguments": {
+                        "ANGLE": {
+                          "type": "angle",
+                          "defaultValue": "90"
+                        }
+                      }                    
+                    },
+                    {
+                      "opcode": "getstamprotation",
+                      "blockType": "reporter",
+                      "text": "Stamp Rotation",
+                      "arguments": {
+                        "ANGLE": {
+                          "type": "angle",
+                          "defaultValue": "90"
+                        }
+                      }                    
+                    },
+                    {
                         "opcode": "setpenstrechandsquash",
                         "blockType": "command",
                         "text": "Set stamp width to [width] and height to [height]",
@@ -461,6 +490,20 @@ class BetterPen {
                                 "type": "number",
                                 "defaultValue": "64"
                             }
+                        }                    
+                    },
+                    {
+                        "opcode": "getstampwidth",
+                        "blockType": "reporter",
+                        "text": "Stamp Width",
+                        "arguments": {
+                        }                    
+                    },
+                    {
+                        "opcode": "getstampheight",
+                        "blockType": "reporter",
+                        "text": "Stamp Height",
+                        "arguments": {
                         }                    
                     },
                     /*{
@@ -553,6 +596,14 @@ class BetterPen {
         };
     }
     
+    getstampwidth({}) {
+      return Penwidth;
+    }
+
+    getstampheight({}) {
+      return PenHeight;
+    }
+
     converttocanvascoords({coordmenu,scrcoord,coordTypes}) {
       if (coordTypes == 'Canvas')
       {
@@ -578,6 +629,15 @@ class BetterPen {
       }
     }
 
+    getstamprotation({}) {
+      return stamprotation
+    }
+
+    rotateStamp({ANGLE}) {
+      stamprotation = ANGLE
+      return "done"
+    }
+
     pendrawspritefromurl({url,x,y}) {
         canvaswidth = canvas.width
         canvasheight =  canvas.height
@@ -586,7 +646,7 @@ class BetterPen {
             textures[url] = loadImageAndCreateTextureInfo(url)
             console.log(textures[url])
         }
-        drawImage(textures[url].texture, Penwidth * scalemultiplyer, PenHeight * scalemultiplyer, x * scalemultiplyer, y * scalemultiplyer);
+        drawImage(textures[url].texture, Penwidth * scalemultiplyer, PenHeight * scalemultiplyer, (x) * scalemultiplyer, (y) * scalemultiplyer,stamprotation - 90);
         return "stamped"
     }
 
