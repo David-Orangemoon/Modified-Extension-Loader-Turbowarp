@@ -8,7 +8,8 @@ $$ |  $$ |$$ |  $$ |$$ |  $$ |$$\   $$ |         $$ |   $$ |  $$ |      $$ |    
 $$$$$$$  |\$$$$$$  |\$$$$$$  |\$$$$$$  |         $$ |    $$$$$$  |      $$ |      $$$$$$\ $$ /  $$ |
 \_______/  \______/  \______/  \______/          \__|    \______/       \__|      \______|\__|  \__|
                                                                                                     
-not working inside of compiled HTML
+Should've Fixed Compile HTML
+Costume URI block does not want to work if anybody could help that would be awesome
 DO NOT PASTE THIS INTO THE CONSOLE! IT IS A BAD IDEA! USE THE EXTENSION LOADER!                                                                                                    
 */
 
@@ -189,7 +190,16 @@ canvas = canvas.children[0]
 canvas = canvas.children[0]
 canvas = canvas.children[0]
 canvas = canvas.children[0]
+if(!canvas){
+  var canvas = document.getElementById("app")
+  canvas = canvas.children[0]
+  canvas = canvas.children[0]
+  canvas = canvas.children[0]
+}
 var gl = canvas.getContext("webgl");
+if (!gl){
+  gl = canvas.getContext("experimental-webgl")
+}
 console.log(gl)
 
 var canvaswidth = canvas.width
@@ -201,14 +211,17 @@ var textures = {}
 var vertexshaderCode = [
     'attribute vec4 a_position;',
     'attribute vec2 a_texcoord;',
+    'attribute vec4 aVertexColor;',
     '',
     'uniform mat4 u_matrix;',
     '',
     'varying vec2 v_texcoord;',
+    'varying vec4 vColor;',
     '',
     'void main() {',
     'gl_Position = u_matrix * a_position;',
     'v_texcoord = a_texcoord;',
+    'vColor = aVertexColor;',
     '}'
 ].join('\n');
 
@@ -216,11 +229,12 @@ var fragmentshaderCode = [
     'precision mediump float;',
     '',
     'varying vec2 v_texcoord;',
+    'varying vec4 vColor;',
     '',
     'uniform sampler2D u_texture;',
     '',
     'void main() {',
-    'gl_FragColor = texture2D(u_texture, v_texcoord);',
+    'gl_FragColor = texture2D(u_texture, v_texcoord) * vColor;',
     '}'
 ].join('\n');
 
@@ -241,6 +255,21 @@ var quadcoords = [
     0, 1,
     1, 1,
   ];
+
+var quadcolors = [
+  1.0,  1.0,  1.0,  1.0,
+  1.0,  1.0,  1.0,  1.0,
+  1.0,  1.0,  1.0,  1.0,
+  1.0,  1.0,  1.0,  1.0,
+  1.0,  1.0,  1.0,  1.0,
+  1.0,  1.0,  1.0,  1.0
+  ];
+
+var tricolors = [
+    1.0,  1.0,  1.0,  1.0,
+    1.0,  1.0,  1.0,  1.0,
+    1.0,  1.0,  1.0,  1.0
+    ];
 var quadpositionBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, quadpositionBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quadpositions), gl.STATIC_DRAW);
@@ -249,8 +278,11 @@ var quadtexcoordBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, quadtexcoordBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quadcoords), gl.STATIC_DRAW);
 
+var quadcolorBuffer = gl.createBuffer();
+
 var triPosBuffer = gl.createBuffer();
 var triUVBuffer = gl.createBuffer();
+var tricolorBuffer = gl.createBuffer();
 //end of stupid code
 
 //compile glsl shaders
@@ -259,6 +291,10 @@ var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)
 
 gl.shaderSource(vertexShader, vertexshaderCode)
 gl.shaderSource(fragmentShader, fragmentshaderCode)
+
+gl.enable( gl.BLEND );
+gl.blendEquation( gl.FUNC_ADD );
+gl.blendFunc( gl.ONE_MINUS_CONSTANT_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
 
 gl.compileShader(vertexShader);
 if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
@@ -289,6 +325,7 @@ if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
  // look up where the vertex data needs to go.
  var positionLocation = gl.getAttribLocation(program, "a_position");
  var texcoordLocation = gl.getAttribLocation(program, "a_texcoord");
+ var colorLocation = gl.getAttribLocation(program, "aVertexColor");
 
  // lookup uniforms
  var matrixLocation = gl.getUniformLocation(program, "u_matrix");
@@ -308,8 +345,8 @@ function loadImageAndCreateTextureInfo(url) {
                   new Uint8Array([0, 0, 255, 255]));
 
     // let's assume all images are not a power of 2
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
     var textureInfo = {
@@ -336,6 +373,9 @@ function loadImageAndCreateTextureInfo(url) {
     // Tell WebGL to use our shader program pair
     gl.useProgram(program);
 
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, quadcolorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quadcolors), gl.STATIC_DRAW);
     // Setup the attributes to pull data from our buffers
     gl.bindBuffer(gl.ARRAY_BUFFER, quadpositionBuffer);
     gl.enableVertexAttribArray(positionLocation);
@@ -343,6 +383,9 @@ function loadImageAndCreateTextureInfo(url) {
     gl.bindBuffer(gl.ARRAY_BUFFER, quadtexcoordBuffer);
     gl.enableVertexAttribArray(texcoordLocation);
     gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, quadcolorBuffer);
+    gl.enableVertexAttribArray(colorLocation); //
+    gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
 
     // this matrix will convert from pixels to clip space
     var matrix = m4.orthographic(0, gl.canvas.width, gl.canvas.height, 0, -1, 1);
@@ -376,6 +419,9 @@ function loadImageAndCreateTextureInfo(url) {
     
     gl.bindBuffer(gl.ARRAY_BUFFER, triUVBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(triangleuvs), gl.STATIC_DRAW);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, tricolorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(tricolors), gl.STATIC_DRAW); 
     // Tell WebGL to use our shader program pair
     gl.useProgram(program);
 
@@ -384,8 +430,11 @@ function loadImageAndCreateTextureInfo(url) {
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
     gl.bindBuffer(gl.ARRAY_BUFFER, triUVBuffer);
-    gl.enableVertexAttribArray(texcoordLocation);
+    gl.enableVertexAttribArray(texcoordLocation); //
     gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, tricolorBuffer);
+    gl.enableVertexAttribArray(colorLocation); //
+    gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
 
     // this matrix will convert from pixels to clip space
     var matrix = m4.orthographic(0, gl.canvas.width, gl.canvas.height, 0, -1, 1);
@@ -402,7 +451,7 @@ function loadImageAndCreateTextureInfo(url) {
     gl.uniform1i(textureLocation, 0);
 
     // draw the quad (2 triangles, 6 vertices)
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
 
@@ -520,7 +569,22 @@ class BetterPen {
                         "arguments": {
                         }                    
                     },
-                    /*{
+                    {
+                      "opcode": "setstampcolor",
+                      "blockType": "command",
+                      "text": "Tint stamp by [color] and transparency[T](0-255)",
+                      "arguments": {
+                        "color": {
+                          "type": "color",
+                          "defaultValue": '#ffffff'
+                        },
+                        "T":{
+                          "type": "number",
+                          "defaultValue": '0'
+                        }
+                      }                    
+                    },
+                    {
                         "opcode": "getcostumedata",
                         "blockType": "reporter",
                         "text": "Get data uri of costume[costu] in sprite[spr]",
@@ -535,7 +599,7 @@ class BetterPen {
                             }
                         }                    
                     },
-                    {
+                    /*{
                         "opcode": "getimagefromurl",
                         "blockType": "reporter",
                         "text": "Get data uri from url:[url]",
@@ -564,6 +628,25 @@ class BetterPen {
                               "defaultValue": "0,0,1,1,0,1"
                           }
                       }                    
+                  },
+                  {
+                    "opcode": "settripointcolour",
+                    "blockType": "command",
+                    "text": "Tint point [pointmenu] by [color] and transparency[T](0-255)",
+                    "arguments": {
+                      "pointmenu": {
+                        "type": "string",
+                        "menu": 'pointmenu'
+                      },
+                      "color": {
+                        "type": "color",
+                        "defaultValue": '#ffffff'
+                      },
+                      "T":{
+                        "type": "number",
+                        "defaultValue": '0'
+                      }
+                    }                    
                   },
                   {
                     "opcode": "gettargetstagewidth",
@@ -597,6 +680,25 @@ class BetterPen {
                         "menu": 'coordTypes'
                       }
                     }                    
+                  },
+                  {
+                    "opcode": "rgbtoSColor",
+                    "blockType": "reporter",
+                    "text": "Convert R[R] G[G] B[B] to Hex",
+                    "arguments": {
+                      "R": {
+                        "type": "number",
+                        "defaultValue": '255'
+                      },
+                      "G": {
+                        "type": "number",
+                        "defaultValue": '255'
+                      },
+                      "B": {
+                        "type": "number",
+                        "defaultValue": '255'
+                      }
+                    }                    
                   }
             ],        
             "menus": {
@@ -605,9 +707,16 @@ class BetterPen {
               },
               "coordTypes": {
                 "items": ['Canvas', 'Scratch']
-            }
+              },
+              "pointmenu": {
+                "items": ['1', '2', '3']
+              }
           }   
         };
+    }
+
+    rgbtoSColor({R,G,B}) {
+      return (((R*256)+G) *256)+B
     }
     
     getstampwidth({}) {
@@ -703,14 +812,85 @@ class BetterPen {
         return "done"
     }
     /*async getcostumedata({spr,costu}) {
-      var result = 'data:image/png;base64,' + btoa(unescape(encodeURIComponent(getspritecostume(spr,costu))))
-      return result;
-    }
+      let fr = new FileReader();
+      await fr.readAsDataURL(new Blob([getspritecostume(spr,costu)], { 
+        type: "image/png",
+      }));
+      let fileData = fr.result
+      console.log(fileData)
+      return fileData;
+    }/*data:image/png;base64,' + 
     async getimagefromurl({url}) {
       var result = await getdatafromimageuri(url)
       return result
     }*/
     //scrapped till I figure this out fully!
+
+    settripointcolour({pointmenu,color,T}) {
+      if(pointmenu == "1") {
+        tricolors[0] = hexToRgb(color).r / 255
+        tricolors[1] = hexToRgb(color).g / 255
+        tricolors[2] = hexToRgb(color).b / 255
+        tricolors[3] = T / 255
+      }
+      else if (pointmenu == "2"){
+        tricolors[4] = hexToRgb(color).r / 255
+        tricolors[5] = hexToRgb(color).g / 255
+        tricolors[6] = hexToRgb(color).b / 255
+        tricolors[7] = T / 255
+      }
+      else{
+        tricolors[8] = hexToRgb(color).r / 255
+        tricolors[9] = hexToRgb(color).g / 255
+        tricolors[10] = hexToRgb(color).b / 255
+        tricolors[11] = T / 255
+      }
+
+      return "done"
+    }
+
+    setstampcolor({color,T}) {
+      console.log(hexToRgb(color))
+      let convertr = hexToRgb(color).r / 255
+      let convertg = hexToRgb(color).g / 255
+      let convertb = hexToRgb(color).b / 255
+      let converta = T / 255
+        quadcolors[0] = convertr
+        quadcolors[1] = convertg
+        quadcolors[2] = convertb
+        quadcolors[3] = converta
+        quadcolors[4] = convertr
+        quadcolors[5] = convertg
+        quadcolors[6] = convertb
+        quadcolors[7] = converta
+        quadcolors[8] = convertr
+        quadcolors[9] = convertg
+        quadcolors[10] = convertb
+        quadcolors[11] = converta
+
+        quadcolors[12] = convertr
+        quadcolors[13] = convertg
+        quadcolors[14] = convertb
+        quadcolors[15] = converta
+        quadcolors[16] = convertr
+        quadcolors[17] = convertg
+        quadcolors[18] = convertb
+        quadcolors[19] = converta
+        quadcolors[20] = convertr
+        quadcolors[21] = convertg
+        quadcolors[22] = convertb
+        quadcolors[23] = converta
+
+      return "done"
+    }
+}
+
+function hexToRgb(hex) {
+  return {
+    r: Math.floor(hex/65536),
+    g: Math.floor(hex/256)%256,
+    b: hex%256
+  }
 }
 
 function getdatafromimageuri(url)
@@ -722,9 +902,9 @@ function getdatafromimageuri(url)
 
 function getspritecostume(t,c)
 {
-  const ps_sp=vm.runtime.targets[t];
-  const ps_cs=ps_sp.sprite.costumes[c].asset.data;
-  console.log(ps_cs)
+  let ps_sp=vm.runtime.targets[t];
+  let ps_cs=ps_sp.sprite.costumes[c].asset.data;
+  console.log(ps_sp.sprite.costumes[c].asset)
   return ps_cs
 }
 
