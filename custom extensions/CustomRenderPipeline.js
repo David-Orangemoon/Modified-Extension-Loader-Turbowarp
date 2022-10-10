@@ -249,12 +249,12 @@ var quadpositions = [
   ];
 
 var quadcoords = [
-    0, 0,
-    0, 1,
-    1, 0,
-    1, 0,
-    0, 1,
-    1, 1,
+    -0.5, -0.5,
+    -0.5, -0.5,
+    0.5, -0.5,
+    0.5, -0.5,
+    -0.5, 0.5,
+    0.5, 0.5,
   ];
 
 var quadcolors = [
@@ -609,7 +609,7 @@ class BetterPen {
                     {
                         "opcode": "getcostumedata",
                         "blockType": "reporter",
-                        "text": "Get data uri of costume[costu] in sprite[spr]",
+                        "text": "Get data uri of costume[costu] in sprite[spr] (0 is stage)",
                         "arguments": {
                             "costu": {
                                 "type": "number",
@@ -621,7 +621,7 @@ class BetterPen {
                             }
                         }                    
                     },
-                    /*{
+                    {
                         "opcode": "getimagefromurl",
                         "blockType": "reporter",
                         "text": "Get data uri from url:[url]",
@@ -631,7 +631,7 @@ class BetterPen {
                                 "defaultValue": "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
                             }
                         }                    
-                    },*/
+                    },
                     {
                       "opcode": "pendrawtexturedtrifromurl",
                       "blockType": "command",
@@ -843,12 +843,8 @@ class BetterPen {
         screenheight = height;
         return "done"
     }
-    /*async getcostumedata({spr,costu}) {
-      let fr = new FileReader();
-      await fr.readAsDataURL(new Blob([getspritecostume(spr,costu)], { 
-        type: "image/png",
-      }));
-      let fileData = fr.result
+    getcostumedata({spr,costu}) {
+      let fileData = getspritecostume(spr,costu) 
       console.log(fileData)
       return fileData;
     }/*data:image/png;base64,' + 
@@ -935,8 +931,8 @@ function getdatafromimageuri(url)
 function getspritecostume(t,c)
 {
   let ps_sp=vm.runtime.targets[t];
-  let ps_cs=ps_sp.sprite.costumes[c].asset.data;
-  console.log(ps_sp.sprite.costumes[c].asset)
+  let ps_cs=ps_sp.sprite.costumes[c].asset.encodeDataURI();
+  console.log(ps_cs)
   return ps_cs
 }
 
