@@ -178,23 +178,24 @@ var tempcanvas = document.createElement("canvas");
     var tempcanvas1 = tempcanvas.getContext("2d");  
 
 var canvas = document.getElementById("app")
+if (document.getElementsByClassName("sc-canvas").length > 0)
+{
+  canvas = document.getElementsByClassName("sc-canvas")[0]
+}
+else
+{
+  canvas = canvas.children[0]
 canvas = canvas.children[0]
 canvas = canvas.children[0]
-canvas = canvas.children[0]
-canvas = canvas.children[2]
-canvas = canvas.children[0]
-canvas = canvas.children[1]
-canvas = canvas.children[0]
-canvas = canvas.children[1]
-canvas = canvas.children[0]
-canvas = canvas.children[0]
-canvas = canvas.children[0]
-canvas = canvas.children[0]
-if(!canvas){
-  var canvas = document.getElementById("app")
+  canvas = canvas.children[2]
+  canvas = canvas.children[0]
+  canvas = canvas.children[1]
+  canvas = canvas.children[0]
+  canvas = canvas.children[1]
   canvas = canvas.children[0]
   canvas = canvas.children[0]
   canvas = canvas.children[0]
+canvas = canvas.children[0]
 }
 var gl = canvas.getContext("webgl");
 if (!gl){
@@ -612,7 +613,7 @@ class BetterPen {
                         "arguments": {
                             "costu": {
                                 "type": "number",
-                                "defaultValue": "1"
+                                "defaultValue": "0"
                             },
                             "spr": {
                                 "type": "number",
