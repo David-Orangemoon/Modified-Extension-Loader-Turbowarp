@@ -621,7 +621,7 @@ class BetterPen {
                             }
                         }                    
                     },
-                    {
+                    /*{
                         "opcode": "getimagefromurl",
                         "blockType": "reporter",
                         "text": "Get data uri from url:[url]",
@@ -631,7 +631,7 @@ class BetterPen {
                                 "defaultValue": "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
                             }
                         }                    
-                    },
+                    },*/
                     {
                       "opcode": "pendrawtexturedtrifromurl",
                       "blockType": "command",
@@ -735,7 +735,8 @@ class BetterPen {
               },
               "TFmenu": {
                 "items": ['true',"false"]
-              }
+              },
+              //Dynamic Menus
           }   
         };
     }
