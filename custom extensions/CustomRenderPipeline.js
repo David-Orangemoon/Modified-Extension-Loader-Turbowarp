@@ -612,7 +612,7 @@ class BetterPen {
                         "arguments": {
                             "costu": {
                                 "type": "number",
-                                "defaultValue": "0"
+                                "defaultValue": "1"
                             },
                             "spr": {
                                 "type": "number",
@@ -931,7 +931,7 @@ function getdatafromimageuri(url)
 function getspritecostume(t,c)
 {
   let ps_sp=vm.runtime.targets[t];
-  let ps_cs=ps_sp.sprite.costumes[c].asset.encodeDataURI();
+  let ps_cs=ps_sp.sprite.costumes[c - 1].asset.encodeDataURI();
   console.log(ps_cs)
   return ps_cs
 }
