@@ -9,8 +9,7 @@ $$$$$$$  |\$$$$$$  |\$$$$$$  |\$$$$$$  |         $$ |    $$$$$$  |      $$ |    
 \_______/  \______/  \______/  \______/          \__|    \______/       \__|      \______|\__|  \__|
                                                                                                     
 Should've Fixed Compile HTML
-Costume URI block does not want to work if anybody could help that would be awesome
-DO NOT PASTE THIS INTO THE CONSOLE! IT IS A BAD IDEA! USE THE EXTENSION LOADER!                      
+Has mixed results Most computers and browsers work but some reject it?                    
 QUICK FIX added clamping because some textures require it?                                                                              
 */
 
