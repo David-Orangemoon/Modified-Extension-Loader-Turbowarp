@@ -88,7 +88,25 @@ class DangerousButUsefulHTML {
                                 "defaultValue": "Put HTML here"
                             }
                         },                    
-                    }
+                    },
+                    {
+                        "opcode": "changepageTitle",
+                        "blockType": "command",
+                        "text": "Change page title to [title]",
+                        "arguments": {
+                            "title": {
+                                "type": "string",
+                                "defaultValue": "Hello World"
+                            }
+                        },                    
+                    },
+                    {
+                        "opcode": "getpageTitle",
+                        "blockType": "reporter",
+                        "text": "Get this pages title",
+                        "arguments": {
+                        },                    
+                    },
             ]
         }
     }
@@ -100,6 +118,14 @@ class DangerousButUsefulHTML {
     openpagewithhtml({html}) {
         let newWindow = window.open(null,"_blank");
         newWindow.document.write(html);
+        return "replaced"
+    }
+    getpageTitle({}) {
+        return document.title;
+    }
+ 
+    changepageTitle({title}) {
+        document.title = title;
         return "replaced"
     }
 }
@@ -192,7 +218,7 @@ class DangerousButUsefulMOUSE {
         return {
             "blockIconURI": mouseicon,
             "id": "mousecontroller",
-            "name": "MOUSE TOOLS",
+            "name": "SYSTEM TOOLS",
             "color1":'#eb5e34',
             "color2":'#eb5e34',
             "color3":'#eb5e34',
@@ -224,7 +250,53 @@ class DangerousButUsefulMOUSE {
                                 "menu": 'posMenu'
                               }
                         }
-                    }
+                    },
+                    {
+                        "opcode": "getifchargine",
+                        "blockType": "Boolean",
+                        "text": "Is the device charging?",
+                        "arguments": {
+                        },                    
+                    },
+                    {
+                        "opcode": "getbatchartime",
+                        "blockType": "reporter",
+                        "text": "Charge time",
+                        "arguments": {
+                        },                    
+                    },
+                    {
+                        "opcode": "getbatdischargetime",
+                        "blockType": "reporter",
+                        "text": "discharge time",
+                        "arguments": {
+                        },                    
+                    },
+                    {
+                        "opcode": "getbatperce",
+                        "blockType": "reporter",
+                        "text": "Battery Percent",
+                        "arguments": {
+                        },                    
+                    },
+                    {
+                        "opcode": "getClipboardText",
+                        "blockType": "reporter",
+                        "text": "Get the clipboard's text",
+                        "arguments": {
+                        },                    
+                    },
+                    {
+                        "opcode": "setclipboardText",
+                        "blockType": "command",
+                        "text": "Set the clipboard text to [title]",
+                        "arguments": {
+                            "title": {
+                                "type": "string",
+                                "defaultValue": "Hello World"
+                            }
+                        },                    
+                    },
             ],
             "menus": {
                 "TFmenu": {
@@ -268,6 +340,36 @@ class DangerousButUsefulMOUSE {
             
         }
     }
+
+    getClipboardText({}) {
+        getclip()
+        return curcliptext
+    }
+ 
+    setclipboardText({title}) {
+        setclip(title)
+        return "replaced"
+    }
+
+    getifchargine({}) {
+        getlaptopcharging();
+        return islaptopcharging;
+    }
+ 
+    getbatchartime({}) {
+        getlaptopcharging();
+        return chargetime;
+    }
+ 
+    getbatdischargetime({}) {
+        getlaptopcharging();
+        return dischargetime;
+    }
+ 
+    getbatperce({}) {
+        getlaptopcharging();
+        return batterypercent * 100;
+    }
 }
 
 async function getfile() {
@@ -291,6 +393,23 @@ document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
 var positionupdate = {
     "x": 0,
     "y": 0
+}
+
+async function getlaptopcharging() {
+    navigator.getBattery().then((battery) => {
+        islaptopcharging = battery.charging;
+        chargetime = battery.chargingTime;
+        dischargetime = battery.dischargingTime;
+        batterypercent = battery.level;
+      });
+}
+
+async function getclip() {
+    curcliptext = navigator.clipboard.readText();
+}
+ 
+async function setclip(write) {
+    navigator.clipboard.writeText(write);
 }
 
 function updatePosition(e) {
