@@ -11,7 +11,7 @@ $$$$$$$  |\$$$$$$  |\$$$$$$  |\$$$$$$  |         $$ |    $$$$$$  |      $$ |    
 Now It runs on default Turbowarp!                                                                         
 */
 
-if (typeof window === "undefined" || !window.vm) {
+if (typeof window === 'undefined' || !window.vm) {
   isSandboxed = true;
 } else {
   isSandboxed = false;
@@ -170,10 +170,10 @@ return fetch(URL).then(res => res.text()).catch(err => '');
 
 //bruh why could they not give the stage an id?
 
-var tempcanvas = document.createElement("canvas");
+var tempcanvas = document.createElement('canvas');
   tempcanvas.width = 480;
   tempcanvas.height = 360;
-  var tempcanvas1 = tempcanvas.getContext("2d");  
+  var tempcanvas1 = tempcanvas.getContext('2d');  
 
 var textures = {}
 
@@ -251,7 +251,7 @@ return deg * 0.0174533
 var getDataUri = function(url,callback) {
   var tempimage = new Image();
   tempimage.src = url;
-  tempimage.crossOrigin="anonymous"
+  tempimage.crossOrigin='anonymous'
   console.log(url)
   tempimage.onload = function() {
       tempcanvas1.drawImage(this, 0, 0);
@@ -263,21 +263,21 @@ var getDataUri = function(url,callback) {
 
 (function(Scratch) {
 'use strict';
-var canvas = document.querySelectorAll("canvas")
+var canvas = document.querySelectorAll('canvas')
 console.log(canvas)
 canvas = canvas[0];
-if (document.getElementsByClassName("sc-canvas").length > 0)
+if (document.getElementsByClassName('sc-canvas').length > 0)
 {
-canvas = document.getElementsByClassName("sc-canvas")[0]
+canvas = document.getElementsByClassName('sc-canvas')[0]
 }
 else
 {
 }
-var gl = canvas.getContext("webgl");
+var gl = canvas.getContext('webgl');
 var canvaswidth = canvas.width
 var canvasheight =  canvas.height
 if (!gl){
-gl = canvas.getContext("experimental-webgl")
+gl = canvas.getContext('experimental-webgl')
 }
 console.log(gl)
 
@@ -334,13 +334,13 @@ if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS)) {
 //end of program data
 
 // look up where the vertex data needs to go.
-var positionLocation = gl.getAttribLocation(program, "a_position");
-var texcoordLocation = gl.getAttribLocation(program, "a_texcoord");
-var colorLocation = gl.getAttribLocation(program, "aVertexColor");
+var positionLocation = gl.getAttribLocation(program, 'a_position');
+var texcoordLocation = gl.getAttribLocation(program, 'a_texcoord');
+var colorLocation = gl.getAttribLocation(program, 'aVertexColor');
 
 // lookup uniforms
-var matrixLocation = gl.getUniformLocation(program, "u_matrix");
-var textureLocation = gl.getUniformLocation(program, "u_texture");
+var matrixLocation = gl.getUniformLocation(program, 'u_matrix');
+var textureLocation = gl.getUniformLocation(program, 'u_texture');
 
 if (!Scratch.extensions.unsandboxed) {
   throw new Error('MyExtension must be run unsandboxed');
@@ -348,22 +348,22 @@ if (!Scratch.extensions.unsandboxed) {
 class BetterPen {    
     getInfo() {
         return {
-            id: "betterpen",
-            name: "Pen+",
+            id: 'betterpen',
+            name: 'Pen+',
             color1:'#0e9a6b',
             color2:'#0e9a6b',
             color3:'#0e9a6b',
             docsURI: 'https://www.youtube.com/playlist?list=PLdR2VVCBIN3CceUdgKWOUxFEEbLqWgCC9',
-            blockIconURI: "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIzNy44NjkyMSIgaGVpZ2h0PSI0OC44NTI3MiIgdmlld0JveD0iMCwwLDM3Ljg2OTIxLDQ4Ljg1MjcyIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgY3g9IjIzNy41NDM0IiBjeT0iMTg0LjAwNTYiIHI9IjkuOTg1NDkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBpZD0iY29sb3ItMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjY2ZkNWU5Ii8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIyMy4zMDE4MSwtMTYzLjc2MzA5KSI+PGcgZGF0YS1wYXBlci1kYXRhPSJ7JnF1b3Q7aXNQYWludGluZ0xheWVyJnF1b3Q7OnRydWV9IiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0yMjUuMTYzNTYsMTkzLjIwMDIxYzAuNTYxNTMsLTEuMTA3NDYgMi4yMzQwNCwtMy4yODU4MyAyLjIzNDA0LC0zLjI4NTgzYzAsMCAwLjU5NDQyLDEuODIzOTEgMS4yMjQ0OSwyLjU5NTc1YzAuNjMyMTIsMC43NzQzNSAyLjA4ODc4LDEuNDc0ODQgMi4wODg3OCwxLjQ3NDg0YzAsMCAtMi4xOTQ0NiwxLjI4MTQxIC0zLjMyNDIxLDEuNzI2OTVjLTEuMTEwMzIsMC40Mzc4NyAtMy4zOTcsMC45MjM2NyAtMy4zOTcsMC45MjM2N2MwLDAgMC41OTk3NCwtMi4zMDI5OSAxLjE3MzksLTMuNDM1Mzh6IiBmaWxsPSIjNGM5N2ZmIiBzdHJva2U9IiM1NzVlNzUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiLz48cGF0aCBkPSJNMjI3LjYxMTMxLDE4OS4yOTIwM2wxNC45NTE1NCwtMTUuMjcxOTNjMCwwIDIuMjA2LDAuODk1MDUgMi45NTc3NiwxLjYzMDQ3YzAuODY4OCwwLjg0OTkxIDEuOTU0ODksMy4xNzUzOCAxLjk1NDg5LDMuMTc1MzhsLTE2LjEyNjMxLDE1LjE2NTE0YzAsMCAtMi4wMDYzOSwtMS4xMjc4NiAtMi42MDkyMSwtMS44ODU2OGMtMC42NDA4MiwtMC44MDU2IC0xLjEyODY4LC0yLjgxMzM3IC0xLjEyODY4LC0yLjgxMzM3eiIgZmlsbD0idXJsKCNjb2xvci0xKSIgc3Ryb2tlPSIjNTc1ZTc1IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0Ii8+PHBhdGggZD0iTTIzNy43NTY5OSwxNzIuOTUyMTNjMCwwIDAuOTg2MTksMS4wNTA2MiAyLjM5NjA4LC0wLjI3MDcyYzEuODAzLC0xLjY4OTc3IDQuMjMxMDUsLTUuOTAxNDcgNS40NDc0MywtNi41ODcwN2MxLjM3NDgsLTAuNzc0ODkgMy45MDQxNCwwLjIzNjM5IDMuOTA0MTQsMC4yMzYzOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTc1ZTc1IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0yMzYuMDc5ODEsMTcyLjMxMTM1YzAsLTAuNjkwMzYgMC41NTk2NCwtMS4yNSAxLjI1LC0xLjI1YzAuNjkwMzYsMCAxLjI1LDAuNTU5NjQgMS4yNSwxLjI1YzAsMC42OTAzNiAtMC41NTk2NCwxLjI1IC0xLjI1LDEuMjVjLTAuNjkwMzYsMCAtMS4yNSwtMC41NTk2NCAtMS4yNSwtMS4yNXoiIGZpbGw9IiM1NzVlNzUiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1saW5lY2FwPSJidXR0Ii8+PHBhdGggZD0iTTI1MC45OTk3OSwxNjQuNzI4NzdjMCwwIDEuOTEzOTYsLTEuMDUxOTMgNC4yMDAwOSwxLjMyMzU4YzIuNDI2ODUsMi41MjE3MyAwLjYwNTc2LDQuNDQzNDQgMC42MDU3Niw0LjQ0MzQ0bC04LjMzMDE0LDguMjIzMzVjMCwwIC0wLjc1MDQsLTIuMDcxMTIgLTEuNTYyNDksLTIuNzk0OTRjLTAuODI1MjQsLTAuNzM1NTUgLTMuMzUwMTYsLTEuNTgzNzMgLTMuMzUwMTYsLTEuNTgzNzN6IiBmaWxsPSIjNGM5N2ZmIiBzdHJva2U9IiM1NzVlNzUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiLz48dGV4dCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMzkuODkzMzcsMjAxLjcxMTE4KSBzY2FsZSgwLjg3MjM3LDAuODcyMzcpIiBmb250LXNpemU9IjQwIiB4bWw6c3BhY2U9InByZXNlcnZlIiBmaWxsPSIjZThlYmY0IiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0iIzU3NWU3NSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0iU2FucyBTZXJpZiIgZm9udC13ZWlnaHQ9Im5vcm1hbCIgdGV4dC1hbmNob3I9InN0YXJ0IiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PHRzcGFuIHg9IjAiIGR5PSIwIj4rPC90c3Bhbj48L3RleHQ+PC9nPjwvZz48L3N2Zz48IS0tcm90YXRpb25DZW50ZXI6MTYuNjk4MTkxNTI3MDE2NDYyOjE2LjIzNjkxNDk5OTk5OTk4Mi0tPg==",
+            blockIconURI: 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIzNy44NjkyMSIgaGVpZ2h0PSI0OC44NTI3MiIgdmlld0JveD0iMCwwLDM3Ljg2OTIxLDQ4Ljg1MjcyIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgY3g9IjIzNy41NDM0IiBjeT0iMTg0LjAwNTYiIHI9IjkuOTg1NDkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBpZD0iY29sb3ItMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjY2ZkNWU5Ii8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIyMy4zMDE4MSwtMTYzLjc2MzA5KSI+PGcgZGF0YS1wYXBlci1kYXRhPSJ7JnF1b3Q7aXNQYWludGluZ0xheWVyJnF1b3Q7OnRydWV9IiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0yMjUuMTYzNTYsMTkzLjIwMDIxYzAuNTYxNTMsLTEuMTA3NDYgMi4yMzQwNCwtMy4yODU4MyAyLjIzNDA0LC0zLjI4NTgzYzAsMCAwLjU5NDQyLDEuODIzOTEgMS4yMjQ0OSwyLjU5NTc1YzAuNjMyMTIsMC43NzQzNSAyLjA4ODc4LDEuNDc0ODQgMi4wODg3OCwxLjQ3NDg0YzAsMCAtMi4xOTQ0NiwxLjI4MTQxIC0zLjMyNDIxLDEuNzI2OTVjLTEuMTEwMzIsMC40Mzc4NyAtMy4zOTcsMC45MjM2NyAtMy4zOTcsMC45MjM2N2MwLDAgMC41OTk3NCwtMi4zMDI5OSAxLjE3MzksLTMuNDM1Mzh6IiBmaWxsPSIjNGM5N2ZmIiBzdHJva2U9IiM1NzVlNzUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiLz48cGF0aCBkPSJNMjI3LjYxMTMxLDE4OS4yOTIwM2wxNC45NTE1NCwtMTUuMjcxOTNjMCwwIDIuMjA2LDAuODk1MDUgMi45NTc3NiwxLjYzMDQ3YzAuODY4OCwwLjg0OTkxIDEuOTU0ODksMy4xNzUzOCAxLjk1NDg5LDMuMTc1MzhsLTE2LjEyNjMxLDE1LjE2NTE0YzAsMCAtMi4wMDYzOSwtMS4xMjc4NiAtMi42MDkyMSwtMS44ODU2OGMtMC42NDA4MiwtMC44MDU2IC0xLjEyODY4LC0yLjgxMzM3IC0xLjEyODY4LC0yLjgxMzM3eiIgZmlsbD0idXJsKCNjb2xvci0xKSIgc3Ryb2tlPSIjNTc1ZTc1IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0Ii8+PHBhdGggZD0iTTIzNy43NTY5OSwxNzIuOTUyMTNjMCwwIDAuOTg2MTksMS4wNTA2MiAyLjM5NjA4LC0wLjI3MDcyYzEuODAzLC0xLjY4OTc3IDQuMjMxMDUsLTUuOTAxNDcgNS40NDc0MywtNi41ODcwN2MxLjM3NDgsLTAuNzc0ODkgMy45MDQxNCwwLjIzNjM5IDMuOTA0MTQsMC4yMzYzOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTc1ZTc1IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0yMzYuMDc5ODEsMTcyLjMxMTM1YzAsLTAuNjkwMzYgMC41NTk2NCwtMS4yNSAxLjI1LC0xLjI1YzAuNjkwMzYsMCAxLjI1LDAuNTU5NjQgMS4yNSwxLjI1YzAsMC42OTAzNiAtMC41NTk2NCwxLjI1IC0xLjI1LDEuMjVjLTAuNjkwMzYsMCAtMS4yNSwtMC41NTk2NCAtMS4yNSwtMS4yNXoiIGZpbGw9IiM1NzVlNzUiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIwLjUiIHN0cm9rZS1saW5lY2FwPSJidXR0Ii8+PHBhdGggZD0iTTI1MC45OTk3OSwxNjQuNzI4NzdjMCwwIDEuOTEzOTYsLTEuMDUxOTMgNC4yMDAwOSwxLjMyMzU4YzIuNDI2ODUsMi41MjE3MyAwLjYwNTc2LDQuNDQzNDQgMC42MDU3Niw0LjQ0MzQ0bC04LjMzMDE0LDguMjIzMzVjMCwwIC0wLjc1MDQsLTIuMDcxMTIgLTEuNTYyNDksLTIuNzk0OTRjLTAuODI1MjQsLTAuNzM1NTUgLTMuMzUwMTYsLTEuNTgzNzMgLTMuMzUwMTYsLTEuNTgzNzN6IiBmaWxsPSIjNGM5N2ZmIiBzdHJva2U9IiM1NzVlNzUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiLz48dGV4dCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMzkuODkzMzcsMjAxLjcxMTE4KSBzY2FsZSgwLjg3MjM3LDAuODcyMzcpIiBmb250LXNpemU9IjQwIiB4bWw6c3BhY2U9InByZXNlcnZlIiBmaWxsPSIjZThlYmY0IiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0iIzU3NWU3NSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0iU2FucyBTZXJpZiIgZm9udC13ZWlnaHQ9Im5vcm1hbCIgdGV4dC1hbmNob3I9InN0YXJ0IiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PHRzcGFuIHg9IjAiIGR5PSIwIj4rPC90c3Bhbj48L3RleHQ+PC9nPjwvZz48L3N2Zz48IS0tcm90YXRpb25DZW50ZXI6MTYuNjk4MTkxNTI3MDE2NDYyOjE2LjIzNjkxNDk5OTk5OTk4Mi0tPg==',
             blocks: [
                           {
-                            opcode: "precachetextures",
+                            opcode: 'precachetextures',
                             blockType: Scratch.BlockType.COMMAND,
-                            text: "precache texture [uri] clamp the texture? [clamp], filter [filter]",
+                            text: 'precache texture [uri] clamp the texture? [clamp], filter [filter]',
                             arguments: {
                                 uri: {
                                     type: Scratch.ArgumentType.STRING,
-                                    defaultValue: "uri here"
+                                    defaultValue: 'uri here'
                                 },
                                 clamp: {
                                   type: Scratch.ArgumentType.STRING,
@@ -376,94 +376,94 @@ class BetterPen {
                             }                    
                         },
                     {
-                        opcode: "settargetsw",
+                        opcode: 'settargetsw',
                         blockType: Scratch.BlockType.COMMAND,
-                        text: "Change the target screen size to width[width] and height[height]",
+                        text: 'Change the target screen size to width[width] and height[height]',
                         arguments: {
                             width: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "480"
+                                defaultValue: '480'
                             },
                             height: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "360"
+                                defaultValue: '360'
                             }
                         }                    
                     },
                     {
-                        opcode: "pendrawspritefromurl",
+                        opcode: 'pendrawspritefromurl',
                         blockType: Scratch.BlockType.COMMAND,
-                        text: "Stamp the image from url:[url] at x:[x] y:[y]",
+                        text: 'Stamp the image from url:[url] at x:[x] y:[y]',
                         arguments: {
                             url: {
                                 type: Scratch.ArgumentType.STRING,
-                                defaultValue: "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
+                                defaultValue: 'https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png'
                             },
                             x: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "240"
+                                defaultValue: '240'
                             },
                             y: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "180"
+                                defaultValue: '180'
                             }
                         }                    
                     },
                     {
-                      opcode: "rotateStamp",
+                      opcode: 'rotateStamp',
                       blockType: Scratch.BlockType.COMMAND,
-                      text: "Set stamp rotation to [ANGLE]",
+                      text: 'Set stamp rotation to [ANGLE]',
                       arguments: {
                         ANGLE: {
                           type: Scratch.ArgumentType.ANGLE,
-                          defaultValue: "90"
+                          defaultValue: '90'
                         }
                       }                    
                     },
                     {
-                      opcode: "getstamprotation",
+                      opcode: 'getstamprotation',
                       blockType: Scratch.BlockType.REPORTER,
-                      text: "Stamp Rotation",
+                      text: 'Stamp Rotation',
                       arguments: {
                         ANGLE: {
                           type: Scratch.ArgumentType.ANGLE,
-                          defaultValue: "90"
+                          defaultValue: '90'
                         }
                       }                    
                     },
                     {
-                        opcode: "setpenstrechandsquash",
+                        opcode: 'setpenstrechandsquash',
                         blockType: Scratch.BlockType.COMMAND,
-                        text: "Set stamp width to [width] and height to [height]",
+                        text: 'Set stamp width to [width] and height to [height]',
                         arguments: {
                             width: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "64"
+                                defaultValue: '64'
                             },
                             height: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "64"
+                                defaultValue: '64'
                             }
                         }                    
                     },
                     {
-                        opcode: "getstampwidth",
+                        opcode: 'getstampwidth',
                         blockType: Scratch.BlockType.REPORTER,
-                        text: "Stamp Width",
+                        text: 'Stamp Width',
                         arguments: {
                         }                    
                     },
                     {
-                        opcode: "getstampheight",
+                        opcode: 'getstampheight',
                         blockType: Scratch.BlockType.REPORTER,
-                        text: "Stamp Height",
+                        text: 'Stamp Height',
                         arguments: {
                         }                    
                     },
                     {
-                      opcode: "setstampcolor",
+                      opcode: 'setstampcolor',
                       blockType: Scratch.BlockType.COMMAND,
-                      text: "Tint stamp by [color] and transparency[T](0-255)",
+                      text: 'Tint stamp by [color] and transparency[T](0-255)',
                       arguments: {
                         color: {
                           type: Scratch.ArgumentType.COLOR,
@@ -476,54 +476,54 @@ class BetterPen {
                       }                    
                     },
                     {
-                        opcode: "getcostumedata",
+                        opcode: 'getcostumedata',
                         blockType: Scratch.BlockType.REPORTER,
-                        text: "Get data uri of costume[costu] in sprite[spr] (0 is stage)",
+                        text: 'Get data uri of costume[costu] in sprite[spr] (0 is stage)',
                         arguments: {
                             costu: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "1"
+                                defaultValue: '1'
                             },
                             spr: {
                                 type: Scratch.ArgumentType.NUMBER,
-                                defaultValue: "1"
+                                defaultValue: '1'
                             }
                         }                    
                     },
                     /*{
-                        "opcode: "getimagefromurl",
-                        "blockType: "reporter",
-                        "text: "Get data uri from url:[url]",
-                        "arguments: {
-                            "url: {
-                                "type: "string",
-                                "defaultValue: "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
+                        'opcode: 'getimagefromurl',
+                        'blockType: 'reporter',
+                        'text: 'Get data uri from url:[url]',
+                        'arguments: {
+                            'url: {
+                                'type: 'string',
+                                'defaultValue: 'https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png'
                             }
                         }                    
                     },*/
                     {
-                      opcode: "pendrawtexturedtrifromurl",
+                      opcode: 'pendrawtexturedtrifromurl',
                       blockType: Scratch.BlockType.COMMAND,
-                      text: "Draw a triangle with points at(seperated by commas)[trianglepoints] and the uvs of [triangleuvs] with the image from url:[url]",
+                      text: 'Draw a triangle with points at(seperated by commas)[trianglepoints] and the uvs of [triangleuvs] with the image from url:[url]',
                       arguments: {
                           url: {
                               type: Scratch.ArgumentType.STRING,
-                              defaultValue: "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
+                              defaultValue: 'https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png'
                           },
                           trianglepoints: {
                               type: Scratch.ArgumentType.STRING,
-                              defaultValue: "0,0,10,10,0,10"
+                              defaultValue: '0,0,10,10,0,10'
                           },
                           triangleuvs: {
                               type: Scratch.ArgumentType.STRING,
-                              defaultValue: "0,0,1,1,0,1"
+                              defaultValue: '0,0,1,1,0,1'
                           }
                       }                    
                   },
                   {
-                    opcode: "settripointcolour",
+                    opcode: 'settripointcolour',
                     blockType: Scratch.BlockType.COMMAND,
-                    text: "Tint point [pointmenu] by [color] and transparency[T](0-255)",
+                    text: 'Tint point [pointmenu] by [color] and transparency[T](0-255)',
                     arguments: {
                       pointmenu: {
                         type: Scratch.ArgumentType.STRING,
@@ -540,23 +540,23 @@ class BetterPen {
                     }                    
                   },
                   {
-                    opcode: "gettargetstagewidth",
+                    opcode: 'gettargetstagewidth',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: "Target Stage Width",
+                    text: 'Target Stage Width',
                     arguments: {
                     }                    
                   },
                   {
-                    opcode: "gettargetstageheight",
+                    opcode: 'gettargetstageheight',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: "Target Stage Height",
+                    text: 'Target Stage Height',
                     arguments: {
                     }                    
                   },
                   {
-                    opcode: "converttocanvascoords",
+                    opcode: 'converttocanvascoords',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: "Convert [scrcoord] to [coordTypes] units on the axis [coordmenu]",
+                    text: 'Convert [scrcoord] to [coordTypes] units on the axis [coordmenu]',
                     arguments: {
                       coordmenu: {
                         type: Scratch.ArgumentType.STRING,
@@ -573,9 +573,9 @@ class BetterPen {
                     }                    
                   },
                   {
-                    opcode: "rgbtoSColor",
+                    opcode: 'rgbtoSColor',
                     blockType: Scratch.BlockType.REPORTER,
-                    text: "Convert R[R] G[G] B[B] to Hex",
+                    text: 'Convert R[R] G[G] B[B] to Hex',
                     arguments: {
                       R: {
                         type: Scratch.ArgumentType.NUMBER,
@@ -603,10 +603,10 @@ class BetterPen {
                 items: ['1', '2', '3']
               },
               TFmenu: {
-                items: ['true',"false"]
+                items: ['true','false']
               },
               filterMenu: {
-                items: ['None',"Linear"]
+                items: ['None','Linear']
               }
               //Dynamic Menus
           }   
@@ -628,7 +628,7 @@ class BetterPen {
     converttocanvascoords({coordmenu,scrcoord,coordTypes}) {
       if (coordTypes == 'Canvas')
       {
-        if (coordmenu == "x")
+        if (coordmenu == 'x')
         {
             return scrcoord + (screenwidth/2)
         }
@@ -639,7 +639,7 @@ class BetterPen {
       }
       else
       {
-        if (coordmenu == "x")
+        if (coordmenu == 'x')
         {
             return scrcoord - (screenwidth/2)
         }
@@ -656,7 +656,7 @@ class BetterPen {
 
     rotateStamp({ANGLE}) {
       stamprotation = ANGLE
-      return "done"
+      return 'done'
     }
 
     pendrawspritefromurl({url,x,y}) {
@@ -668,7 +668,7 @@ class BetterPen {
             console.log(textures[url])
         }
         drawImage(textures[url].texture, Penwidth * scalemultiplyer, PenHeight * scalemultiplyer, (x) * scalemultiplyer, (y) * scalemultiplyer,stamprotation - 90);
-        return "stamped"
+        return 'stamped'
     }
 
     gettargetstagewidth({}) {
@@ -687,14 +687,14 @@ class BetterPen {
           textures[url] = loadImageAndCreateTextureInfo(url,'false')
           console.log(textures[url])
       }
-      var pointsarray = trianglepoints.split(",");
+      var pointsarray = trianglepoints.split(',');
       var pointslen = pointsarray.length;
       for (var i = 0; i < pointslen; i++) {
           pointsarray[i] = pointsarray[i] * scalemultiplyer;
       }
-      var uvarray = triangleuvs.split(",");
+      var uvarray = triangleuvs.split(',');
       drawTexturedTri(textures[url].texture, pointsarray, uvarray);
-      return "stamped"
+      return 'stamped'
     }
 
     async precachetextures({uri,clamp,filter}) {
@@ -709,12 +709,12 @@ class BetterPen {
         PenHeight = height;
         console.log(Penwidth);
         console.log(PenHeight);
-        return "done"
+        return 'done'
     }
     settargetsw({width,height}) {
         screenwidth = width;
         screenheight = height;
-        return "done"
+        return 'done'
     }
     getcostumedata({spr,costu}) {
       let fileData = getspritecostume(spr,costu) 
@@ -728,13 +728,13 @@ class BetterPen {
     //scrapped till I figure this out fully!
 
     settripointcolour({pointmenu,color,T}) {
-      if(pointmenu == "1") {
+      if(pointmenu == '1') {
         tricolors[0] = hexToRgb(color).r / 255
         tricolors[1] = hexToRgb(color).g / 255
         tricolors[2] = hexToRgb(color).b / 255
         tricolors[3] = T / 255
       }
-      else if (pointmenu == "2"){
+      else if (pointmenu == '2'){
         tricolors[4] = hexToRgb(color).r / 255
         tricolors[5] = hexToRgb(color).g / 255
         tricolors[6] = hexToRgb(color).b / 255
@@ -747,7 +747,7 @@ class BetterPen {
         tricolors[11] = T / 255
       }
 
-      return "done"
+      return 'done'
     }
 
     setstampcolor({color,T}) {
@@ -782,7 +782,7 @@ class BetterPen {
         quadcolors[22] = convertb
         quadcolors[23] = converta
 
-      return "done"
+      return 'done'
     }
 }
 Scratch.extensions.register(new BetterPen());
@@ -827,7 +827,7 @@ function loadImageAndCreateTextureInfo(url,clamp,filter) {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
   }
-  if(filter === "Linear"){
+  if(filter === 'Linear'){
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   }
   else{
