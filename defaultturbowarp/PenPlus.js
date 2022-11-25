@@ -175,26 +175,15 @@ var tempcanvas = document.createElement("canvas");
   tempcanvas.height = 360;
   var tempcanvas1 = tempcanvas.getContext("2d");  
 
-var canvas = document.getElementById("app")
+var canvas = document.querySelectorAll("canvas")
+console.log(canvas)
+canvas = canvas[0];
 if (document.getElementsByClassName("sc-canvas").length > 0)
 {
 canvas = document.getElementsByClassName("sc-canvas")[0]
 }
 else
 {
-console.log(canvas.children[0])
-canvas = canvas.children[0]
-canvas = canvas.children[0]
-canvas = canvas.children[0]
-canvas = canvas.children[2]
-canvas = canvas.children[0]
-canvas = canvas.children[1]
-canvas = canvas.children[0]
-canvas = canvas.children[1]
-canvas = canvas.children[0]
-canvas = canvas.children[0]
-canvas = canvas.children[0]
-canvas = canvas.children[0]
 }
 var gl = canvas.getContext("webgl");
 if (!gl){
