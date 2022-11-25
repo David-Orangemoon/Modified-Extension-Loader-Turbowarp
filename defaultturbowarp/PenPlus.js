@@ -182,6 +182,7 @@ canvas = document.getElementsByClassName("sc-canvas")[0]
 }
 else
 {
+console.log(canvas.children[0])
 canvas = canvas.children[0]
 canvas = canvas.children[0]
 canvas = canvas.children[0]
