@@ -175,22 +175,6 @@ var tempcanvas = document.createElement("canvas");
   tempcanvas.height = 360;
   var tempcanvas1 = tempcanvas.getContext("2d");  
 
-var canvas = document.querySelectorAll("canvas")
-console.log(canvas)
-canvas = canvas[0];
-if (document.getElementsByClassName("sc-canvas").length > 0)
-{
-canvas = document.getElementsByClassName("sc-canvas")[0]
-}
-else
-{
-}
-var gl = canvas.getContext("webgl");
-if (!gl){
-gl = canvas.getContext("experimental-webgl")
-}
-console.log(gl)
-
 var canvaswidth = canvas.width
 var canvasheight =  canvas.height
 
@@ -471,6 +455,21 @@ var getDataUri = function(url,callback) {
 
 (function(Scratch) {
 'use strict';
+var canvas = document.querySelectorAll("canvas")
+console.log(canvas)
+canvas = canvas[0];
+if (document.getElementsByClassName("sc-canvas").length > 0)
+{
+canvas = document.getElementsByClassName("sc-canvas")[0]
+}
+else
+{
+}
+var gl = canvas.getContext("webgl");
+if (!gl){
+gl = canvas.getContext("experimental-webgl")
+}
+console.log(gl)
 if (!Scratch.extensions.unsandboxed) {
   throw new Error('MyExtension must be run unsandboxed');
 }
