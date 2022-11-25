@@ -501,134 +501,134 @@ class BetterPen {
             "blocks": [
                           {
                             "opcode": "precachetextures",
-                            "blockType": "command",
+                            "blockType": Scratch.BlockType.COMMAND,
                             "text": "precache texture [uri] clamp the texture? [clamp], filter [filter]",
                             "arguments": {
                                 "uri": {
-                                    "type": "string",
+                                    "type": Scratch.ArgumentType.STRING,
                                     "defaultValue": "uri here"
                                 },
                                 "clamp": {
-                                  "type": "string",
+                                  "type": Scratch.ArgumentType.STRING,
                                   "menu": 'TFmenu'
                                 },
                                 "filter": {
-                                  "type": "string",
+                                  "type": Scratch.ArgumentType.STRING,
                                   "menu": 'filterMenu'
                                 }
                             }                    
                         },
                     {
                         "opcode": "settargetsw",
-                        "blockType": "command",
+                        "blockType": Scratch.BlockType.COMMAND,
                         "text": "Change the target screen size to width[width] and height[height]",
                         "arguments": {
                             "width": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "480"
                             },
                             "height": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "360"
                             }
                         }                    
                     },
                     {
                         "opcode": "pendrawspritefromurl",
-                        "blockType": "command",
+                        "blockType": Scratch.BlockType.COMMAND,
                         "text": "Stamp the image from url:[url] at x:[x] y:[y]",
                         "arguments": {
                             "url": {
-                                "type": "string",
+                                "type": Scratch.ArgumentType.STRING,
                                 "defaultValue": "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
                             },
                             "x": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "240"
                             },
                             "y": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "180"
                             }
                         }                    
                     },
                     {
                       "opcode": "rotateStamp",
-                      "blockType": "command",
+                      "blockType": Scratch.BlockType.COMMAND,
                       "text": "Set stamp rotation to [ANGLE]",
                       "arguments": {
                         "ANGLE": {
-                          "type": "angle",
+                          "type": Scratch.ArgumentType.ANGLE,
                           "defaultValue": "90"
                         }
                       }                    
                     },
                     {
                       "opcode": "getstamprotation",
-                      "blockType": "reporter",
+                      "blockType": Scratch.BlockType.REPORTER,
                       "text": "Stamp Rotation",
                       "arguments": {
                         "ANGLE": {
-                          "type": "angle",
+                          "type": Scratch.ArgumentType.ANGLE,
                           "defaultValue": "90"
                         }
                       }                    
                     },
                     {
                         "opcode": "setpenstrechandsquash",
-                        "blockType": "command",
+                        "blockType": Scratch.BlockType.COMMAND,
                         "text": "Set stamp width to [width] and height to [height]",
                         "arguments": {
                             "width": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "64"
                             },
                             "height": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "64"
                             }
                         }                    
                     },
                     {
                         "opcode": "getstampwidth",
-                        "blockType": "reporter",
+                        "blockType": Scratch.BlockType.REPORTER,
                         "text": "Stamp Width",
                         "arguments": {
                         }                    
                     },
                     {
                         "opcode": "getstampheight",
-                        "blockType": "reporter",
+                        "blockType": Scratch.BlockType.REPORTER,
                         "text": "Stamp Height",
                         "arguments": {
                         }                    
                     },
                     {
                       "opcode": "setstampcolor",
-                      "blockType": "command",
+                      "blockType": Scratch.BlockType.COMMAND,
                       "text": "Tint stamp by [color] and transparency[T](0-255)",
                       "arguments": {
                         "color": {
-                          "type": "color",
+                          "type": Scratch.ArgumentType.COLOR,
                           "defaultValue": '#ffffff'
                         },
                         "T":{
-                          "type": "number",
+                          "type": Scratch.ArgumentType.NUMBER,
                           "defaultValue": '0'
                         }
                       }                    
                     },
                     {
                         "opcode": "getcostumedata",
-                        "blockType": "reporter",
+                        "blockType": Scratch.BlockType.REPORTER,
                         "text": "Get data uri of costume[costu] in sprite[spr] (0 is stage)",
                         "arguments": {
                             "costu": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "1"
                             },
                             "spr": {
-                                "type": "number",
+                                "type": Scratch.ArgumentType.NUMBER,
                                 "defaultValue": "1"
                             }
                         }                    
@@ -646,90 +646,90 @@ class BetterPen {
                     },*/
                     {
                       "opcode": "pendrawtexturedtrifromurl",
-                      "blockType": "command",
+                      "blockType": Scratch.BlockType.COMMAND,
                       "text": "Draw a triangle with points at(seperated by commas)[trianglepoints] and the uvs of [triangleuvs] with the image from url:[url]",
                       "arguments": {
                           "url": {
-                              "type": "string",
+                              "type": Scratch.ArgumentType.STRING,
                               "defaultValue": "https://en.scratch-wiki.info/w/images/thumb/ScratchCat-Small.png/200px-ScratchCat-Small.png"
                           },
                           "trianglepoints": {
-                              "type": "string",
+                              "type": Scratch.ArgumentType.STRING,
                               "defaultValue": "0,0,10,10,0,10"
                           },
                           "triangleuvs": {
-                              "type": "string",
+                              "type": Scratch.ArgumentType.STRING,
                               "defaultValue": "0,0,1,1,0,1"
                           }
                       }                    
                   },
                   {
                     "opcode": "settripointcolour",
-                    "blockType": "command",
+                    "blockType": Scratch.BlockType.COMMAND,
                     "text": "Tint point [pointmenu] by [color] and transparency[T](0-255)",
                     "arguments": {
                       "pointmenu": {
-                        "type": "string",
+                        "type": Scratch.ArgumentType.STRING,
                         "menu": 'pointmenu'
                       },
                       "color": {
-                        "type": "color",
+                        "type": Scratch.ArgumentType.COLOR,
                         "defaultValue": '#ffffff'
                       },
                       "T":{
-                        "type": "number",
+                        "type": Scratch.ArgumentType.NUMBER,
                         "defaultValue": '0'
                       }
                     }                    
                   },
                   {
                     "opcode": "gettargetstagewidth",
-                    "blockType": "reporter",
+                    "blockType": Scratch.BlockType.REPORTER,
                     "text": "Target Stage Width",
                     "arguments": {
                     }                    
                   },
                   {
                     "opcode": "gettargetstageheight",
-                    "blockType": "reporter",
+                    "blockType": Scratch.BlockType.REPORTER,
                     "text": "Target Stage Height",
                     "arguments": {
                     }                    
                   },
                   {
                     "opcode": "converttocanvascoords",
-                    "blockType": "reporter",
+                    "blockType": Scratch.BlockType.REPORTER,
                     "text": "Convert [scrcoord] to [coordTypes] units on the axis [coordmenu]",
                     "arguments": {
                       "coordmenu": {
-                        "type": "string",
+                        "type": Scratch.ArgumentType.STRING,
                         "menu": 'coordMenu'
                       },
                       "scrcoord": {
-                        "type": "number",
+                        "type": Scratch.ArgumentType.NUMBER,
                         "defaultValue": '0'
                       },
                       "coordTypes": {
-                        "type": "string",
+                        "type": Scratch.ArgumentType.STRING,
                         "menu": 'coordTypes'
                       }
                     }                    
                   },
                   {
                     "opcode": "rgbtoSColor",
-                    "blockType": "reporter",
+                    "blockType": Scratch.BlockType.REPORTER,
                     "text": "Convert R[R] G[G] B[B] to Hex",
                     "arguments": {
                       "R": {
-                        "type": "number",
+                        "type": Scratch.ArgumentType.NUMBER,
                         "defaultValue": '255'
                       },
                       "G": {
-                        "type": "number",
+                        "type": Scratch.ArgumentType.NUMBER,
                         "defaultValue": '255'
                       },
                       "B": {
-                        "type": "number",
+                        "type": Scratch.ArgumentType.NUMBER,
                         "defaultValue": '255'
                       }
                     }                    
@@ -930,6 +930,7 @@ class BetterPen {
 }
 Scratch.extensions.register(new BetterPen());
 })(Scratch);
+
 function hexToRgb(hex) {
 return {
   r: Math.floor(hex/65536),
