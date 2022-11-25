@@ -790,7 +790,7 @@ class BetterPen {
     }
 }
 Scratch.extensions.register(new BetterPen());
-})(Scratch);
+});(Scratch);
 
 function hexToRgb(hex) {
 return {
