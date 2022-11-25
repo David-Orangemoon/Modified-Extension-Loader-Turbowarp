@@ -240,6 +240,47 @@ var tricolors = [
   1.0,  1.0,  1.0,  1.0,
   1.0,  1.0,  1.0,  1.0
   ];
+
+//cool drawing functions
+
+function degtorad(deg) {
+return deg * 0.0174533
+}
+
+
+var getDataUri = function(url,callback) {
+  var tempimage = new Image();
+  tempimage.src = url;
+  tempimage.crossOrigin="anonymous"
+  console.log(url)
+  tempimage.onload = function() {
+      tempcanvas1.drawImage(this, 0, 0);
+          // ... or get as Data URI
+      callback(tempcanvas.toDataURL('image/png'));
+  }
+}
+//end of cool drawing functions.
+
+(function(Scratch) {
+'use strict';
+var canvas = document.querySelectorAll("canvas")
+console.log(canvas)
+canvas = canvas[0];
+if (document.getElementsByClassName("sc-canvas").length > 0)
+{
+canvas = document.getElementsByClassName("sc-canvas")[0]
+}
+else
+{
+}
+var gl = canvas.getContext("webgl");
+var canvaswidth = canvas.width
+var canvasheight =  canvas.height
+if (!gl){
+gl = canvas.getContext("experimental-webgl")
+}
+console.log(gl)
+
 var quadpositionBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, quadpositionBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quadpositions), gl.STATIC_DRAW);
@@ -301,174 +342,6 @@ var colorLocation = gl.getAttribLocation(program, "aVertexColor");
 var matrixLocation = gl.getUniformLocation(program, "u_matrix");
 var textureLocation = gl.getUniformLocation(program, "u_texture");
 
-//cool drawing functions
-
-function degtorad(deg) {
-return deg * 0.0174533
-}
-
-function loadImageAndCreateTextureInfo(url,clamp,filter) {
-  var tex = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, tex);
-  // Fill the texture with a 1x1 blue pixel.
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-                new Uint8Array([0, 0, 255, 255]));
-
-  // let's assume all images are not a power of 2
-  if (clamp == 'true') {
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  }
-  else{
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-  }
-  if(filter === "Linear"){
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-  }
-  else{
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  }
-  
-
-  var textureInfo = {
-    width: 1,   // we don't know the size until it loads
-    height: 1,
-    texture: tex,
-  };
-  var img = new Image();
-  img.addEventListener('load', function() {
-    textureInfo.width = img.width;
-    textureInfo.height = img.height;
-
-    gl.bindTexture(gl.TEXTURE_2D, textureInfo.texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-  });
-  img.src = url;
-
-  return textureInfo;
-}
-
-function drawImage(tex, texWidth, texHeight, dstX, dstY ,stamprotation) {
-  gl.bindTexture(gl.TEXTURE_2D, tex);
-
-  // Tell WebGL to use our shader program pair
-  gl.useProgram(program);
-
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, quadcolorBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quadcolors), gl.STATIC_DRAW);
-  // Setup the attributes to pull data from our buffers
-  gl.bindBuffer(gl.ARRAY_BUFFER, quadpositionBuffer);
-  gl.enableVertexAttribArray(positionLocation);
-  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-  gl.bindBuffer(gl.ARRAY_BUFFER, quadtexcoordBuffer);
-  gl.enableVertexAttribArray(texcoordLocation);
-  gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
-  gl.bindBuffer(gl.ARRAY_BUFFER, quadcolorBuffer);
-  gl.enableVertexAttribArray(colorLocation); //
-  gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
-
-  // this matrix will convert from pixels to clip space
-  var matrix = m4.orthographic(0, gl.canvas.width, gl.canvas.height, 0, -1, 1);
-
-  // this matrix will translate our quad to dstX, dstY
-  matrix = m4.translate(matrix, dstX, dstY, 0);
-
-  matrix = m4.zRotate(matrix,degtorad(stamprotation))
-
-  // this matrix will scale our 1 unit quad
-  // from 1 unit to texWidth, texHeight units
-  matrix = m4.scale(matrix, texWidth, texHeight, 1);
-
-  // Set the matrix.
-  gl.uniformMatrix4fv(matrixLocation, false, matrix);
-
-  // Tell the shader to get the texture from texture unit 0
-  gl.uniform1i(textureLocation, 0);
-
-  // draw the quad (2 triangles, 6 vertices)
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
-}
-
-function drawTexturedTri(tex, trianglepoints, triangleuvs) {
-  gl.bindTexture(gl.TEXTURE_2D, tex);
-
-  
-  gl.bindBuffer(gl.ARRAY_BUFFER, triPosBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(trianglepoints), gl.STATIC_DRAW);
-
-  
-  gl.bindBuffer(gl.ARRAY_BUFFER, triUVBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(triangleuvs), gl.STATIC_DRAW);
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, tricolorBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(tricolors), gl.STATIC_DRAW); 
-  // Tell WebGL to use our shader program pair
-  gl.useProgram(program);
-
-  // Setup the attributes to pull data from our buffers
-  gl.bindBuffer(gl.ARRAY_BUFFER, triPosBuffer);
-  gl.enableVertexAttribArray(positionLocation);
-  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-  gl.bindBuffer(gl.ARRAY_BUFFER, triUVBuffer);
-  gl.enableVertexAttribArray(texcoordLocation); //
-  gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
-  gl.bindBuffer(gl.ARRAY_BUFFER, tricolorBuffer);
-  gl.enableVertexAttribArray(colorLocation); //
-  gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
-
-  // this matrix will convert from pixels to clip space
-  var matrix = m4.orthographic(0, gl.canvas.width, gl.canvas.height, 0, -1, 1);
-
-  // this matrix will translate our quad to dstX, dstY
-
-  // this matrix will scale our 1 unit quad
-  // from 1 unit to texWidth, texHeight units
-
-  // Set the matrix.
-  gl.uniformMatrix4fv(matrixLocation, false, matrix);
-
-  // Tell the shader to get the texture from texture unit 0
-  gl.uniform1i(textureLocation, 0);
-
-  // draw the quad (2 triangles, 6 vertices)
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
-}
-
-
-var getDataUri = function(url,callback) {
-  var tempimage = new Image();
-  tempimage.src = url;
-  tempimage.crossOrigin="anonymous"
-  console.log(url)
-  tempimage.onload = function() {
-      tempcanvas1.drawImage(this, 0, 0);
-          // ... or get as Data URI
-      callback(tempcanvas.toDataURL('image/png'));
-  }
-}
-//end of cool drawing functions.
-
-(function(Scratch) {
-'use strict';
-var canvas = document.querySelectorAll("canvas")
-console.log(canvas)
-canvas = canvas[0];
-if (document.getElementsByClassName("sc-canvas").length > 0)
-{
-canvas = document.getElementsByClassName("sc-canvas")[0]
-}
-else
-{
-}
-var gl = canvas.getContext("webgl");
-var canvaswidth = canvas.width
-var canvasheight =  canvas.height
-if (!gl){
-gl = canvas.getContext("experimental-webgl")
-}
-console.log(gl)
 if (!Scratch.extensions.unsandboxed) {
   throw new Error('MyExtension must be run unsandboxed');
 }
@@ -940,4 +813,133 @@ let ps_sp=vm.runtime.targets[t];
 let ps_cs=ps_sp.sprite.costumes[c - 1].asset.encodeDataURI();
 console.log(ps_cs)
 return ps_cs
+}
+
+function loadImageAndCreateTextureInfo(url,clamp,filter) {
+  var tex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  // Fill the texture with a 1x1 blue pixel.
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+                new Uint8Array([0, 0, 255, 255]));
+
+  // let's assume all images are not a power of 2
+  if (clamp == 'true') {
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  }
+  else{
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+  }
+  if(filter === "Linear"){
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  }
+  else{
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  }
+  
+
+  var textureInfo = {
+    width: 1,   // we don't know the size until it loads
+    height: 1,
+    texture: tex,
+  };
+  var img = new Image();
+  img.addEventListener('load', function() {
+    textureInfo.width = img.width;
+    textureInfo.height = img.height;
+
+    gl.bindTexture(gl.TEXTURE_2D, textureInfo.texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+  });
+  img.src = url;
+
+  return textureInfo;
+}
+
+function drawImage(tex, texWidth, texHeight, dstX, dstY ,stamprotation) {
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+
+  // Tell WebGL to use our shader program pair
+  gl.useProgram(program);
+
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, quadcolorBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(quadcolors), gl.STATIC_DRAW);
+  // Setup the attributes to pull data from our buffers
+  gl.bindBuffer(gl.ARRAY_BUFFER, quadpositionBuffer);
+  gl.enableVertexAttribArray(positionLocation);
+  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, quadtexcoordBuffer);
+  gl.enableVertexAttribArray(texcoordLocation);
+  gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, quadcolorBuffer);
+  gl.enableVertexAttribArray(colorLocation); //
+  gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
+
+  // this matrix will convert from pixels to clip space
+  var matrix = m4.orthographic(0, gl.canvas.width, gl.canvas.height, 0, -1, 1);
+
+  // this matrix will translate our quad to dstX, dstY
+  matrix = m4.translate(matrix, dstX, dstY, 0);
+
+  matrix = m4.zRotate(matrix,degtorad(stamprotation))
+
+  // this matrix will scale our 1 unit quad
+  // from 1 unit to texWidth, texHeight units
+  matrix = m4.scale(matrix, texWidth, texHeight, 1);
+
+  // Set the matrix.
+  gl.uniformMatrix4fv(matrixLocation, false, matrix);
+
+  // Tell the shader to get the texture from texture unit 0
+  gl.uniform1i(textureLocation, 0);
+
+  // draw the quad (2 triangles, 6 vertices)
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
+}
+
+function drawTexturedTri(tex, trianglepoints, triangleuvs) {
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+
+  
+  gl.bindBuffer(gl.ARRAY_BUFFER, triPosBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(trianglepoints), gl.STATIC_DRAW);
+
+  
+  gl.bindBuffer(gl.ARRAY_BUFFER, triUVBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(triangleuvs), gl.STATIC_DRAW);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, tricolorBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(tricolors), gl.STATIC_DRAW); 
+  // Tell WebGL to use our shader program pair
+  gl.useProgram(program);
+
+  // Setup the attributes to pull data from our buffers
+  gl.bindBuffer(gl.ARRAY_BUFFER, triPosBuffer);
+  gl.enableVertexAttribArray(positionLocation);
+  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, triUVBuffer);
+  gl.enableVertexAttribArray(texcoordLocation); //
+  gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, tricolorBuffer);
+  gl.enableVertexAttribArray(colorLocation); //
+  gl.vertexAttribPointer(colorLocation, 4, gl.FLOAT, false, 0, 0);
+
+  // this matrix will convert from pixels to clip space
+  var matrix = m4.orthographic(0, gl.canvas.width, gl.canvas.height, 0, -1, 1);
+
+  // this matrix will translate our quad to dstX, dstY
+
+  // this matrix will scale our 1 unit quad
+  // from 1 unit to texWidth, texHeight units
+
+  // Set the matrix.
+  gl.uniformMatrix4fv(matrixLocation, false, matrix);
+
+  // Tell the shader to get the texture from texture unit 0
+  gl.uniform1i(textureLocation, 0);
+
+  // draw the quad (2 triangles, 6 vertices)
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
