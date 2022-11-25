@@ -175,9 +175,6 @@ var tempcanvas = document.createElement("canvas");
   tempcanvas.height = 360;
   var tempcanvas1 = tempcanvas.getContext("2d");  
 
-var canvaswidth = canvas.width
-var canvasheight =  canvas.height
-
 var textures = {}
 
 //boring GLSL
@@ -466,6 +463,8 @@ else
 {
 }
 var gl = canvas.getContext("webgl");
+var canvaswidth = canvas.width
+var canvasheight =  canvas.height
 if (!gl){
 gl = canvas.getContext("experimental-webgl")
 }
