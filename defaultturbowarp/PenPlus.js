@@ -793,7 +793,7 @@ var getDataUri = function(url,callback) {
         canvasheight =  canvas.height
         var scalemultiplyer = canvaswidth/screenwidth
         if(!textures.hasOwnProperty(url)){
-            textures[url] = loadImageAndCreateTextureInfo(url,'false')
+            textures[url] = loadImageAndCreateTextureInfo(url,'true')
             console.log(textures[url])
         }
         drawImage(textures[url].texture, Penwidth * scalemultiplyer, PenHeight * scalemultiplyer, (x) * scalemultiplyer, (y) * scalemultiplyer,stamprotation - 90);
