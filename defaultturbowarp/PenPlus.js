@@ -813,7 +813,7 @@ var getDataUri = function(url,callback) {
       canvasheight =  canvas.height
       var scalemultiplyer = canvaswidth/screenwidth
       if(!textures.hasOwnProperty(url)){
-          textures[url] = loadImageAndCreateTextureInfo(url,'false')
+          textures[url] = loadImageAndCreateTextureInfo(url,'true')
           console.log(textures[url])
       }
       var pointsarray = trianglepoints.split(",");
