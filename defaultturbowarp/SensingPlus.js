@@ -192,12 +192,11 @@
     globalLists: {},
     stage: {},
     sprites: {},
-    clones: [],
-    clonesOfType: {},
+    clones: {},
     refreshJSON() {
       const targets = Scratch.vm.runtime.targets;
       this.sprites = {}; //Refresh the JSON object so that we don't have to do redunant checks to see if a variable no longer exists.
-      this.clonesOfType = {};
+      this.clones = {};
       for (let index = 0; index < targets.length; index++) {
         // We start from 1 so we don't grab the stage.
         const target = targets[index];
@@ -211,6 +210,12 @@
             lists: {},
             variables: {},
           };
+          if (!this.clones[sprite.name]) {
+            this.clones[sprite.name] = {
+              count: 0,
+              objects: [],
+            };
+          }
           const vars = target.variables;
           const varKeys = Object.keys(vars);
           for (let V = 0; V < varKeys.length; V++) {
@@ -248,9 +253,14 @@
             variables: {},
           };
 
-          this.clonesOfType[cloneDat.name] = this.clonesOfType[cloneDat.name]
-            ? this.clonesOfType[cloneDat.name] + 1
-            : 1;
+          if (!this.clones[cloneDat.name]) {
+            this.clones[cloneDat.name] = {
+              count: 0,
+              objects: [],
+            };
+          }
+
+          this.clones[cloneDat.name].count += 1;
 
           const vars = target.variables;
           const varKeys = Object.keys(vars);
@@ -263,7 +273,7 @@
             }
           }
 
-          this.clones.push(cloneDat);
+          this.clones[cloneDat.name].objects.push(cloneDat);
         } else {
           console.warn(
             "An object of an unknown type is inside of the target's JSON Object"
@@ -278,7 +288,7 @@
 
   let fingersDown = 0;
 
-  const defaultPositions = [
+  const lastFingerPositions = [
     null,
     null,
     null,
@@ -291,7 +301,18 @@
     null,
   ];
 
-  let fingerPositions = defaultPositions;
+  const fingerPositions = [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ];
 
   const vm = Scratch.vm;
   const runtime = vm.runtime;
@@ -305,7 +326,11 @@
     fingersDown = event.touches.length;
 
     changedTouchesKeys.forEach((touch) => {
-      defaultPositions[changedTouches[touch].identifier] = [
+      lastFingerPositions[changedTouches[touch].identifier] = [
+        changedTouches[touch].clientX - canvasPos.left,
+        changedTouches[touch].clientY - canvasPos.top,
+      ];
+      fingerPositions[changedTouches[touch].identifier] = [
         changedTouches[touch].clientX - canvasPos.left,
         changedTouches[touch].clientY - canvasPos.top,
       ];
@@ -319,7 +344,11 @@
     const changedTouchesKeys = Object.keys(changedTouches);
     fingersDown = event.touches.length;
     changedTouchesKeys.forEach((touch) => {
-      defaultPositions[changedTouches[touch].identifier] = [
+      lastFingerPositions[changedTouches[touch].identifier] = [
+        fingerPositions[changedTouches[touch].identifier][0],
+        fingerPositions[changedTouches[touch].identifier][1],
+      ];
+      fingerPositions[changedTouches[touch].identifier] = [
         changedTouches[touch].clientX - canvasPos.left,
         changedTouches[touch].clientY - canvasPos.top,
       ];
@@ -332,7 +361,8 @@
     const changedTouchesKeys = Object.keys(changedTouches);
     fingersDown = event.touches.length;
     changedTouchesKeys.forEach((touch) => {
-      defaultPositions[changedTouches[touch].identifier] = null;
+      lastFingerPositions[changedTouches[touch].identifier] = null;
+      fingerPositions[changedTouches[touch].identifier] = null;
     });
   }
 
@@ -545,6 +575,7 @@
             blockType: Scratch.BlockType.REPORTER,
             text: "# of clones of [Sprite]",
             blockIconURI: catIco,
+            disableMonitor: true,
             filter: [Scratch.TargetType.SPRITE],
             arguments: {
               Sprite: {
@@ -572,6 +603,7 @@
             blockType: Scratch.BlockType.BOOLEAN,
             text: "Hidden?",
             blockIconURI: effectIco,
+            filter: [Scratch.TargetType.SPRITE],
           },
           {
             opcode: "getRotationStyle",
@@ -579,6 +611,7 @@
             text: "Rotation Style",
             blockIconURI: rotationIco,
             disableMonitor: true,
+            filter: [Scratch.TargetType.SPRITE],
           },
           {
             opcode: "getSpriteLayer",
@@ -586,6 +619,7 @@
             text: "Sprite Layer",
             blockIconURI: layerIco,
             disableMonitor: true,
+            filter: [Scratch.TargetType.SPRITE],
           },
           "---",
           {
@@ -682,6 +716,20 @@
       };
     }
 
+    getFingerSpeed({ ID }) {
+      const fingerPos = fingerPositions[ID - 1];
+      const fingerLastPos = lastFingerPositions[ID - 1];
+      if (fingerPos == null) {
+        return 0;
+      }
+      const speed = Math.sqrt(
+        Math.pow(fingerPos[0] - fingerLastPos[0], 2),
+        Math.pow(fingerPos[1] - fingerLastPos[1], 2)
+      );
+      lastFingerPositions[ID - 1] = [fingerPos[0], fingerPos[1]];
+      return speed;
+    }
+
     getSpriteLayer(args, util) {
       return util.target.renderer["_drawList"].indexOf(util.target.drawableID);
     }
@@ -706,7 +754,7 @@
       vmSurfer.refreshJSON();
       const DesiredSprite = objDat[Sprite];
       const SpriteName = vmSurfer.sprites[DesiredSprite].name;
-      return vmSurfer.clonesOfType[SpriteName] || 0;
+      return vmSurfer.clones[SpriteName].count || 0;
     }
 
     recording({ toggle }) {
