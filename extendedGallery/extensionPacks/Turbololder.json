@@ -1,0 +1,16 @@
+{
+    "Mr Beast Utils": {
+      "url":"https://turbololder.vercel.app/extensions/mrbeastutil.js",
+      "banner": "https://turbololder.vercel.app/images/Mr_Beast_Utilitities.svg",
+      "description":"the best blockes ever!! Created by <a href='https://jeremygamer13.vercel.app/'>JeremyGamer13</a>",
+      "before": "McUtils",
+      "tags":"all, Turbololder, Jeremygamer13, Joke"
+    },
+    "Mr Beast Utils": {
+        "url":"https://turbololder.vercel.app/extensions/jungleinferno.js",
+        "banner": "https://turbololder.vercel.app/images/none.png",
+        "description":"a good <br> extension maded by <a href='https://scratch.mit.edu/users/LilyMakesThings/'>LilyMakesThings</a>",
+        "before": "McUtils",
+        "tags":"all, LilyMakesThings, Joke"
+    }
+}
