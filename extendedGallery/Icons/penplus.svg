@@ -1,5 +1,5 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    width="770.5" height="510.5" viewBox="92.5,140,630,360">
+    width="630" height="360" viewBox="0,0,630,360">
     <defs>
         <linearGradient x1="315" y1="0" x2="315" y2="360" gradientUnits="userSpaceOnUse"
             id="color-1">
@@ -17,7 +17,7 @@
             <stop offset="1" stop-color="#f2f4fa" stop-opacity="0.17255" />
         </linearGradient>
     </defs>
-    <g transform="translate(92.5,95)">
+    <g transform="translate(0,0)">
         <g data-paper-data="{&quot;isPaintingLayer&quot;:true}" stroke-miterlimit="10"
             stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal">
             <g fill-rule="nonzero" stroke="none" stroke-width="0.72289" stroke-linecap="butt"
