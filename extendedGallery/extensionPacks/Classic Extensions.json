@@ -1,0 +1,19 @@
+{
+    "Dot Prop": {
+        "url":"https://gistcdn.githack.com/Richienb/bd67c0d65a187eea28bd18d0e04c1052/raw/061ef801c8b474c75f830805b59947b81d8d4257/index.min.js",
+        "description":"Old JSON blocks. Created by <a href='https://scratch.mit.edu/users/RichieNB/'>RichieNB</a>",
+        "tags":"all, Visual,"
+    },
+    "Math + Utilites": {
+        "url":"https://familycomicsstudios.github.io/ScratchExtensionsFCS/Code/utils.js&extension=https://familycomicsstudios.github.io/ScratchExtensionsFCS/Code/scratchmath.js",
+        "description":"Math and Utilities. Created by <a href='https://scratch.mit.edu/users/RichieNB/'>Family Comics Studios</a>",
+        "before": "Utilities",
+        "tags":"all, Utility, Data"
+    },
+    "Minecraft": {
+        "url":"https://pruss.mobi/js/rjm.js",
+        "description":"Interact with a minecraft server. Created by <a href='https://pruss.mobi/js/rjm.js'>pruss</a>",
+        "before": "itch.io",
+        "tags":"all, API"
+    }
+}
