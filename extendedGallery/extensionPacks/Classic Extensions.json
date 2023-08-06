@@ -11,7 +11,7 @@
         "tags":"all, Utility, Data"
     },
     "Minecraft": {
-        "url":"https://pruss.mobi/js/rjm.js",
+        "url":"https://raw.githubusercontent.com/David-Orangemoon/Modified-Extension-Loader-Turbowarp/main/extendedGallery/ported/RJMMC.js",
         "description":"Interact with a minecraft server. Created by <a href='https://pruss.mobi/js/rjm.js'>pruss</a>",
         "before": "itch.io",
         "tags":"all, API"
