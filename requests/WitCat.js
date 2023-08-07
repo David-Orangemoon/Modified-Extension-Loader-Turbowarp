@@ -76,7 +76,6 @@ class WitCatInput {
 		return {
 			id: extensionId, // 拓展id
 			name: "[beta]WitCat‘s Input", // 拓展名
-			docsURI: "https://www.ccw.site/post/6153a7a6-05fb-462e-b785-b97700b12bc2",
 			blockIconURI: _icon,
 			menuIconURI: _icon2,
 			color1: "#52baba",
