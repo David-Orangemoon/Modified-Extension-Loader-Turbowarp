@@ -1,16 +1,19 @@
 {
-    "Mr Beast Utils": {
-      "url":"https://turbololder.vercel.app/extensions/mrbeastutil.js",
-      "banner": "https://turbololder.vercel.app/images/Mr_Beast_Utilitities.svg",
-      "description":"the best blockes ever!! Created by <a href='https://scratch.mit.edu/users/JeremyGamer13/'>JeremyGamer13</a>",
-      "before": "McUtils",
-      "tags":"all, Turbololder, Jeremygamer13, Joke"
-    },
-    "Jungle Inferno": {
-        "url":"https://turbololder.vercel.app/extensions/jungleinferno.js",
-        "banner": "https://turbololder.vercel.app/images/none.png",
-        "description":"a good <br> extension maded by <a href='https://scratch.mit.edu/users/LilyMakesThings/'>LilyMakesThings</a>",
+    "name":"🤓 TurboLolder 🤓",
+    "extensions":{
+        "Mr Beast Utils": {
+        "url":"https://turbololder.vercel.app/extensions/mrbeastutil.js",
+        "banner": "https://turbololder.vercel.app/images/Mr_Beast_Utilitities.svg",
+        "description":"the best blockes ever!! Created by <a href='https://scratch.mit.edu/users/JeremyGamer13/'>JeremyGamer13</a>",
         "before": "McUtils",
-        "tags":"all, LilyMakesThings, Joke"
+        "tags":"all, Turbololder, Jeremygamer13, Joke"
+        },
+        "Jungle Inferno": {
+            "url":"https://turbololder.vercel.app/extensions/jungleinferno.js",
+            "banner": "https://turbololder.vercel.app/images/none.png",
+            "description":"a good <br> extension maded by <a href='https://scratch.mit.edu/users/LilyMakesThings/'>LilyMakesThings</a>",
+            "before": "McUtils",
+            "tags":"all, LilyMakesThings, Joke"
+        }
     }
 }
